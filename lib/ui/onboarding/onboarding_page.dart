@@ -5,6 +5,10 @@ import 'package:medpod/utilities/constants/colors.dart';
 import 'package:medpod/utilities/constants/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async';
+
+import '../sign_in/sign_in_page.dart';
 
 class Onboard extends StatefulWidget {
   const Onboard({Key? key}) : super(key: key);
@@ -15,22 +19,25 @@ class Onboard extends StatefulWidget {
 
 class _OnboardState extends State<Onboard> {
   int currentIndex = 0;
+  bool isLoading = false;
+  bool end = false;
+  late Timer timer;
   late PageController _pageController;
   List<OnboardModel> screens = <OnboardModel>[
     OnboardModel(
-      img: 'assets/',
+      img: 'assets/images/onboardingIllustration1.svg',
       text: 'Track all your medications in one place.',
       desc:
           'Organize and customize your medication list and schedule use easily.',
     ),
     OnboardModel(
-      img: 'assets/',
+      img: 'assets/images/onboardingIllustration2.svg',
       text: 'Never miss a dose of your medication.',
       desc:
           'Set reminders and get notifications to take and refill medications.',
     ),
     OnboardModel(
-      img: 'assets/',
+      img: 'assets/images/onboardingIllustration3.svg',
       text: 'Stay informed with our news articles.',
       desc: 'Learn more with our health articles written by professionals.',
     ),
@@ -39,12 +46,28 @@ class _OnboardState extends State<Onboard> {
   @override
   void initState() {
     _pageController = PageController(initialPage: 0);
+    Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if (currentIndex == 2) {
+        end = true;
+      } else if (currentIndex == 0) {
+        end = false;
+      }
+      if (end == false) {
+        currentIndex++;
+      }
+      _pageController.animateToPage(
+        currentIndex,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeIn,
+      );
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    timer.cancel();
     super.dispose();
   }
 
@@ -53,6 +76,15 @@ class _OnboardState extends State<Onboard> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('onBoard', isViewed);
   }
+
+  // void _showSignInPage(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       fullscreenDialog: true,
+  //       builder: (context) => SignInPage(),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +100,7 @@ class _OnboardState extends State<Onboard> {
           vertical: 20,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
               child: PageView.builder(
@@ -81,18 +114,20 @@ class _OnboardState extends State<Onboard> {
                   },
                   itemBuilder: (_, index) {
                     return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(height: 305, child: InkWell()),
                         //Image.asset(screens[index].img),
+                        SvgPicture.asset(screens[index].img, height: 400),
+                        const SizedBox(height: 20),
                         Text(
                           screens[index].text,
                           style: kHeading3TextStyle.copyWith(
                               color: kHeadingTextColor),
                           textAlign: TextAlign.center,
                         ),
+                        const SizedBox(height: 20),
                         Text(
                           screens[index].desc.toString(),
                           textAlign: TextAlign.center,
@@ -117,23 +152,36 @@ class _OnboardState extends State<Onboard> {
                     );
                   }),
             ),
+            const SizedBox(
+              height: 24,
+            ),
             SmoothPageIndicator(
               controller: _pageController,
               count: screens.length,
               effect: const ScrollingDotsEffect(
                 activeStrokeWidth: 2.6,
                 activeDotScale: 1.3,
-                radius: 6,
+                radius: 5,
                 spacing: 12,
-                dotHeight: 12,
-                dotWidth: 12,
+                dotHeight: 10,
+                dotWidth: 10,
                 activeDotColor: kPrimaryColor,
                 dotColor: Colors.grey,
               ),
             ),
             CustomButton(
               title: 'Login',
-              onPressed: () {},
+              onPressed: () async {
+                await _storeOnboardInfo();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => SignInPage(
+                      isLoading: isLoading,
+                    ),
+                  ),
+                );
+              },
               isButtonDisabled: false,
             ),
             Padding(
@@ -148,7 +196,7 @@ class _OnboardState extends State<Onboard> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],

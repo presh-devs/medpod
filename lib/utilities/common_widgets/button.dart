@@ -11,12 +11,12 @@ class CustomButton extends StatelessWidget {
       this.isButtonDisabled = true})
       : super(key: key);
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool isButtonDisabled;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(28.0),
       child: SizedBox(
         height: 58,
         width: double.infinity,
