@@ -102,8 +102,14 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
       formType: formType,
       submitted: false,
       isLoading: false,
-      passwordVisible: false,
+      passwordVisible: !passwordVisible,
     );
+  }
+
+  void togglePasswordIcon() {
+    passwordVisible = !passwordVisible;
+    updateWith(passwordVisible: !passwordVisible);
+    notifyListeners();
   }
 
   void updateEmail(String email) => updateWith(email: email);

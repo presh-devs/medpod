@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/constants/text_styles.dart';
+import '../bottom_navBar/bottomNavBar.dart';
 import 'sign_in_model.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 
 class SignInForm extends StatefulWidget {
-  SignInForm({Key? key, required this.model}) : super(key: key);
+  const SignInForm({Key? key, required this.model}) : super(key: key);
   final SignInModel model;
 
   static Widget create(BuildContext context) {
@@ -47,6 +48,10 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Future<void> _submit() async {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+          fullscreenDialog: true, builder: (context) => BottomNavBar()),
+    );
     // try {
     //   await model.submit();
     //   Navigator.of(context).pop();
@@ -60,11 +65,14 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void _toggleFormType() {
-    print('toggle clicked');
     _emailController.clear;
     _nameController.clear;
     _passwordController.clear;
     model.toggleFormType();
+  }
+
+  void _togglePasswordIcon() {
+    model.togglePasswordIcon();
   }
 
   List<Widget> _buildChildren() {
@@ -109,24 +117,41 @@ class _SignInFormState extends State<SignInForm> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 40,
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: Colors.transparent,
+                  //onSurface: kDefaultButtonColor,
+                  shape: const CircleBorder(),
+                ),
+                child: Image.asset(
+                  'assets/images/google-logo.png',
+                ),
+              ),
             ),
             const VerticalDivider(
               width: 50,
               color: Colors.black,
             ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                elevation: 2,
-                //primary: kDefaultButtonColor,
-                //onSurface: kDefaultButtonColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(70),
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: Colors.blue,
+                  //onSurface: kDefaultButtonColor,
+                  shape: const CircleBorder(),
+                ),
+                child: Image.asset(
+                  'assets/images/facebook-logo.png',
                 ),
               ),
-              child: SvgPicture.asset('assets/images/google.svg'),
             ),
           ],
         ),
@@ -155,10 +180,11 @@ class _SignInFormState extends State<SignInForm> {
         labelText: 'Password',
         errorText: model.passwordErrorText,
         suffixIcon: IconButton(
-          icon: Icon(
-              model.passwordVisible ? Icons.visibility : Icons.visibility_off),
+          icon: SvgPicture.asset(model.passwordVisible
+              ? 'assets/icons/eye-fill.svg'
+              : 'assets/icons/eye-off-fill.svg'),
           onPressed: () {
-            model.passwordVisible = !model.passwordVisible;
+            _togglePasswordIcon();
           },
         ),
       ),
