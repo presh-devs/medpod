@@ -30,9 +30,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CircleAvatar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: SvgPicture.asset(
-            'assets/icons/profile1.svg',
+            'assets/icons/profile.svg',
 
             //width: 230,
             //height: 235,

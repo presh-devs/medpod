@@ -5,103 +5,102 @@ import '../utilities/common_widgets/button.dart';
 import '../utilities/constants/colors.dart';
 import '../utilities/constants/text_styles.dart';
 
-class MedicalCondition extends StatelessWidget {
+enum MedCon { other, pnts }
+
+class MedicalCondition extends StatefulWidget {
   const MedicalCondition({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<MedicalCondition> createState() => _MedicalConditionState();
+}
 
+class _MedicalConditionState extends State<MedicalCondition> {
+  MedCon _medCon = MedCon.other;
+  @override
+  Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                const SizedBox(
-                  width: 75,
-                ),
-                Text(
-                  'Hydroxyurea 500mg',
-                  style: kMediumBody2TextStyle.copyWith(color: Colors.white),
-                ),
-              ]),
-              const SizedBox(
-                height: 26,
+              Text(
+                'Medical Condition',
+                style: kBodyLTextStyle1,
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'What are you taking his med for?',
-                  style: kMediumBody2TextStyle.copyWith(color: Colors.white),
-                ),
+              SizedBox(
+                height: height * 0.02,
               ),
-              const SizedBox(
-                height: 24,
+              Text(
+                'What are you taking his med for?',
               ),
-              Container(
-                height: 830,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(
-                    16,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ListView.builder(
-                          physics: ScrollPhysics(parent: null),
-                          shrinkWrap: true,
-                          itemCount: medicalCondition.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        UsageFrequency(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                medicalCondition[index],
-                                textAlign: TextAlign.left,
-                              ),
-                            );
-                          }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const TextField(
-                        decoration: InputDecoration(
-                          enabled: true,
-// hintText: '@gmail.com',
-                          labelText: 'Other(please specify)',
+              SizedBox(
+                height: height * 0.048,
+              ),
+              ListView.builder(
+                  physics: ScrollPhysics(parent: null),
+                  shrinkWrap: true,
+                  itemCount: medicalCondition.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: kPrimaryTextColor,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  UsageFrequency(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          medicalCondition[index],
+                          textAlign: TextAlign.left,
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  }),
+              const TextField(
+                decoration: InputDecoration(
+                  enabled: true,
+// hintText: '@gmail.com',
+                  labelText: 'Other(please specify)',
                 ),
+              ),
+              ListTile(
+                title: Text('other'),
+                leading: Radio(
+                    value: MedCon.other,
+                    groupValue: _medCon,
+                    onChanged: (MedCon? value) {
+                      setState(() {
+                        _medCon = value!;
+                      });
+                    }),
+              ),
+              ListTile(
+                title: Text('Prefer not to say'),
+                leading: Radio(
+                    value: MedCon.pnts,
+                    groupValue: _medCon,
+                    onChanged: (MedCon? value) {
+                      setState(() {
+                        _medCon = value!;
+                      });
+                    }),
               ),
             ],
           ),

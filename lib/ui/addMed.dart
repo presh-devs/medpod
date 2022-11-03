@@ -16,6 +16,7 @@ class AddMed extends StatefulWidget {
 }
 
 class _AddMedState extends State<AddMed> {
+  final TextEditingController medicine = TextEditingController();
   String selectedDrugType = 'Pills';
   List<String> drugType = <String>[
     'Pills',
@@ -38,101 +39,79 @@ class _AddMedState extends State<AddMed> {
   ];
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                const SizedBox(
-                  width: 75,
-                ),
-                Text(
+        child: Padding(
+          padding: const EdgeInsets.all(22.0),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
                   'Add Medication',
-                  style: kMediumBody2TextStyle.copyWith(color: Colors.white),
-                ),
-              ]),
-            ),
-            Container(
-              height: 830,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  style: kMediumBody2TextStyle.copyWith(color: Colors.black),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(
-                  16,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                        enabled: true,
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(
+                    height: height * 0.06,
+                  ),
+                  TextField(
+                    controller: medicine,
+                    decoration: InputDecoration(
+                      enabled: true,
 // hintText: '@gmail.com',
-                        labelText: 'Medicine Name',
-                      ),
+                      labelText: 'Medicine Name',
                     ),
-                    const SizedBox(
-                      height: 22,
-                    ),
-                    buildDrugTypeDropdown(),
-                    const SizedBox(
-                      height: 22,
-                    ),
-                    ListTile(
-                      leading: SizedBox(
-                        width: 200,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            enabled: true,
-                            labelText: 'Med Strength per $selectedDrugType',
-                          ),
+                  ),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  buildDrugTypeDropdown(),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  ListTile(
+                    leading: SizedBox(
+                      width: 200,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          enabled: true,
+                          labelText: 'Med Strength per $selectedDrugType',
                         ),
                       ),
-                      trailing: buildUnitsDropdown(),
                     ),
-                    const SizedBox(
-                      height: 267,
-                    ),
-                    CustomButton(
-                      title: 'Next',
-                      isButtonDisabled: false,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => const MedicalCondition(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                    trailing: buildUnitsDropdown(),
+                  ),
+                  SizedBox(
+                    height: height * 0.1,
+                  ),
+                  CustomButton(
+                    title: 'Next',
+                    isButtonDisabled: medicine.text.isEmpty ? true : false,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          fullscreenDialog: false,
+                          builder: (context) => const MedicalCondition(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

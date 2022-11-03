@@ -1,4 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +8,11 @@ import '../../utilities/constants/text_styles.dart';
 import '../bottom_navBar/bottomNavBar.dart';
 import 'sign_in_model.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
+
+var pixelRatio = window.devicePixelRatio;
+var logicalScreenSize = window.physicalSize / pixelRatio;
+var height = logicalScreenSize.height;
+var width = logicalScreenSize.width;
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key, required this.model}) : super(key: key);
@@ -77,13 +84,13 @@ class _SignInFormState extends State<SignInForm> {
 
   List<Widget> _buildChildren() {
     return [
-      Text(model.headingText, style: kHeading1TextStyle),
-      const SizedBox(
-        height: 8,
+      Text(model.headingText, style: kHeadingTextStyle1),
+      SizedBox(
+        height: height * 0.02,
       ),
-      Text(model.headingDesc, style: kLargeBody3TextStyle),
-      const SizedBox(
-        height: 84,
+      Text(model.headingDesc, style: kBodyLTextStyle3),
+      SizedBox(
+        height: height * 0.08,
       ),
       _buildNameTextField(),
       _buildEmailTextField(),
@@ -96,35 +103,39 @@ class _SignInFormState extends State<SignInForm> {
         onPressed: model.canSubmit ? _submit : null,
         title: model.primaryButtonText,
       ),
+      SizedBox(height: height * 0.02),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             height: 1,
-            width: 100,
+            width: width * 0.23,
             color: Colors.black54,
           ),
           Text('or Login with'),
           Container(
             height: 1,
-            width: 100,
+            width: width * 0.23,
             color: Colors.black54,
           ),
         ],
       ),
-      SizedBox(height: 16),
+      SizedBox(height: height * 0.04),
       IntrinsicHeight(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 80,
-              width: 80,
+              width: width * 0.07,
+            ),
+            SizedBox(
+              height: height * 0.08,
+              width: width * 0.3,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  primary: Colors.transparent,
+                  backgroundColor: Colors.blue,
                   //onSurface: kDefaultButtonColor,
                   shape: const CircleBorder(),
                 ),
@@ -133,18 +144,18 @@ class _SignInFormState extends State<SignInForm> {
                 ),
               ),
             ),
-            const VerticalDivider(
-              width: 50,
+            VerticalDivider(
+              width: width * 0.06,
               color: Colors.black,
             ),
             SizedBox(
-              height: 80,
-              width: 80,
+              height: height * 0.08,
+              width: width * 0.2,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  primary: Colors.blue,
+                  backgroundColor: Colors.blue,
                   //onSurface: kDefaultButtonColor,
                   shape: const CircleBorder(),
                 ),
@@ -156,8 +167,8 @@ class _SignInFormState extends State<SignInForm> {
           ],
         ),
       ),
-      const SizedBox(
-        height: 200,
+      SizedBox(
+        height: height * 0.12,
       ),
       Center(
         child: TextButton(

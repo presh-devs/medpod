@@ -28,7 +28,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _buildContent(BuildContext context) {
     final SignInModel model;
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(22.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

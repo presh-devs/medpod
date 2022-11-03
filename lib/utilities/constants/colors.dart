@@ -11,3 +11,4 @@ const kHoverButtonColor = Color(0xff1C77C3);
 const kDisabledButtonColor = Color(0xff2c2c2c);
 const kHeadingTextColor = Color(0xff092841);
 const kBlackTextColor = Color(0xff333333);
+const kPrimaryTextColor = Color(0xff061A2E);

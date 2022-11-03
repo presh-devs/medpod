@@ -97,9 +97,9 @@ class _OnboardState extends State<Onboard> {
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 20,
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.04,
+          vertical: height * 0.02,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -121,19 +121,20 @@ class _OnboardState extends State<Onboard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         //Image.asset(screens[index].img),
-                        SvgPicture.asset(screens[index].img, height: 400),
-                        const SizedBox(height: 20),
+                        SvgPicture.asset(screens[index].img,
+                            height: height * 0.34),
+                        SizedBox(height: height * 0.0195),
                         Text(
                           screens[index].text,
-                          style: kHeading3TextStyle.copyWith(
+                          style: kHeadingTextStyle3.copyWith(
                               color: kHeadingTextColor),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 20),
+                        // SizedBox(height: height * 0.009),
                         Text(
                           screens[index].desc.toString(),
                           textAlign: TextAlign.center,
-                          style: kLargeBody3TextStyle.copyWith(
+                          style: kBodyLTextStyle3.copyWith(
                               color: kHeadingTextColor),
                         ),
 
@@ -154,8 +155,8 @@ class _OnboardState extends State<Onboard> {
                     );
                   }),
             ),
-            const SizedBox(
-              height: 24,
+            SizedBox(
+              height: height * 0.024,
             ),
             SmoothPageIndicator(
               controller: _pageController,
@@ -198,8 +199,8 @@ class _OnboardState extends State<Onboard> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: height * 0.03,
             ),
           ],
         ),

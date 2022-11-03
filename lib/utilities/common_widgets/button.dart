@@ -24,8 +24,9 @@ class CustomButton extends StatelessWidget {
           onPressed: isButtonDisabled ? null : onPressed,
           style: ElevatedButton.styleFrom(
             elevation: 2,
-            primary: kDefaultButtonColor,
-            onSurface: kDefaultButtonColor,
+            backgroundColor: kDefaultButtonColor,
+            disabledForegroundColor: kDefaultButtonColor.withOpacity(0.38),
+            disabledBackgroundColor: Color(0xffC7C6CA),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
@@ -39,3 +40,5 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+//background: #0xffC7C6CA;
+//kDefaultButtonColor.withOpacity(0.12)

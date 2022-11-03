@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -27,13 +26,13 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text('Today, 1 Jul', style: kSmallBody3TextStyle),
-              const SizedBox(
-                height: 190,
+              SizedBox(
+                height: height * 0.1,
               ),
               SvgPicture.asset(
                 'assets/images/pana.svg',
-                width: 230,
-                height: 235,
+                width: width * 0.4,
+                height: height * 0.3,
               ),
               const SizedBox(
                 height: 16,

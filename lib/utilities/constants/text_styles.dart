@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 
-const kHeading1TextStyle = TextStyle(
-  fontSize: 46,
+const kHeadingTextStyle1 = TextStyle(
+  fontSize: 32,
   fontWeight: FontWeight.w700,
 );
-const kHeading2TextStyle = TextStyle(
-  fontSize: 42,
+const kHeadingTextStyle2 = TextStyle(
+  fontSize: 48,
   fontWeight: FontWeight.w700,
 );
-const kHeading3TextStyle = TextStyle(
-  fontSize: 30,
+const kHeadingTextStyle3 = TextStyle(
+  fontSize: 24,
   fontWeight: FontWeight.w700,
 );
-const kXLarge1TextStyle = TextStyle(
-  fontSize: 30,
+const kBodyXLTextStyle1 = TextStyle(
+  fontSize: 20,
   fontWeight: FontWeight.w700,
 );
-const kXLarge2TextStyle = TextStyle(
-  fontSize: 30,
+const kBodyXLTextStyle2 = TextStyle(
+  fontSize: 20,
   fontWeight: FontWeight.w600,
 );
-const kXLarge3TextStyle = TextStyle(
-  fontSize: 30,
+const kBodyXLTextStyle3 = TextStyle(
+  fontSize: 20,
   fontWeight: FontWeight.w400,
 );
-const kLargeBody1TextStyle = TextStyle(
-  fontSize: 26,
+const kBodyLTextStyle1 = TextStyle(
+  fontSize: 16,
   fontWeight: FontWeight.w700,
 );
-const kLargeBody2TextStyle = TextStyle(
-  fontSize: 26,
+const kBodyLTextStyle2 = TextStyle(
+  fontSize: 16,
   fontWeight: FontWeight.w600,
 );
-const kLargeBody3TextStyle = TextStyle(
-  fontSize: 22,
+const kBodyLTextStyle3 = TextStyle(
+  fontSize: 16,
   fontWeight: FontWeight.w400,
 );
 const kMediumBody1TextStyle = TextStyle(
