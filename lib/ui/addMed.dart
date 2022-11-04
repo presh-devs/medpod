@@ -4,8 +4,9 @@ import 'package:medpod/ui/medical_condition.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:medpod/utilities/constants/text_styles.dart';
-
+import 'package:percent_indicator/percent_indicator.dart';
 import '../utilities/common_widgets/dropdownButton.dart';
+import '../utilities/common_widgets/progress_indicator.dart';
 import 'bottom_navBar/medication.dart';
 
 class AddMed extends StatefulWidget {
@@ -46,6 +47,13 @@ class _AddMedState extends State<AddMed> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          CustomProgressIndicator(
+            width: width,
+            progress: '1/5',
+            percent: 0.2,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/text_styles.dart';
 
 class RefillReminder extends StatefulWidget {
@@ -21,6 +22,13 @@ class _RefillReminderState extends State<RefillReminder> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          CustomProgressIndicator(
+            width: width,
+            progress: '5/5',
+            percent: 1.0,
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(height * 0.02),
@@ -37,11 +45,9 @@ class _RefillReminderState extends State<RefillReminder> {
             const Text(
               'Get reminders to refill your meds when the minimum amount is reached.',
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ListTile(
-                title: Text('Remind me'),
-                leading: Radio(
+            Row(
+              children: [
+                Radio(
                     toggleable: true,
                     value: 'Remind me',
                     groupValue: remindMe,
@@ -50,7 +56,8 @@ class _RefillReminderState extends State<RefillReminder> {
                         // remindMe = value.toString();
                       });
                     }),
-              ),
+                Text('Remind me'),
+              ],
             ),
           ],
         ),

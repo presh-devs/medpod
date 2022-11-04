@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medpod/ui/refill_reminder.dart';
 import 'package:medpod/ui/reminder_schedule.dart';
-
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:medpod/utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/colors.dart';
 import '../utilities/constants/text_styles.dart';
 
@@ -17,6 +18,13 @@ class UsageFrequency extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          CustomProgressIndicator(
+            width: width,
+            progress: '3/5',
+            percent: 0.6,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

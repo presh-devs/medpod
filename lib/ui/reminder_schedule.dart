@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/text_styles.dart';
 
 class ScheduleReminder extends StatelessWidget {
@@ -15,6 +16,13 @@ class ScheduleReminder extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          CustomProgressIndicator(
+            width: width,
+            progress: '4/5',
+            percent: 0.8,
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(height * 0.02),

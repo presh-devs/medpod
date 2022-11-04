@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medpod/ui/usage_frequency.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../utilities/common_widgets/button.dart';
+import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/colors.dart';
 import '../utilities/constants/text_styles.dart';
 
@@ -24,10 +26,16 @@ class _MedicalConditionState extends State<MedicalCondition> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          actions: [
+            CustomProgressIndicator(
+              width: width,
+              progress: '2/5',
+              percent: 0.4,
+            )
+          ]),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.04),
