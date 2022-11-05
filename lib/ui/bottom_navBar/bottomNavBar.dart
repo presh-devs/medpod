@@ -28,35 +28,46 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SvgPicture.asset(
-            'assets/icons/profile.svg',
-
-            //width: 230,
-            //height: 235,
+          child: FittedBox(
+            fit: BoxFit.fill,
+            child: Image.asset(
+              'assets/images/Profile.png',
+            ),
           ),
         ),
-        elevation: 1,
-        backgroundColor: kPrimaryColor,
+        title: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Text('Good Morning'),
+                Image.asset('assets/images/sun.png'),
+              ]),
+              Align(alignment: Alignment.centerLeft, child: Text('Iyanu')),
+            ]),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
-          currentIndex == 0
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/icons/calendar-event-fill.svg',
-                      color: Colors.white,
-                      //width: 230,
-                      //height: 235,
-                    ),
-                    tooltip: '',
-                    onPressed: () {},
-                  ),
-                )
-              : const SizedBox(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/bell.svg',
+                // color: Colors.white,
+                //width: 230,
+                //height: 235,
+              ),
+              tooltip: '',
+              onPressed: () {},
+            ),
+          )
         ],
       ),
       body: screens[currentIndex],

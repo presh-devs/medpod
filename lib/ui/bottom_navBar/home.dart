@@ -25,10 +25,36 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('Today, 1 Jul', style: kSmallBody3TextStyle),
               SizedBox(
-                height: height * 0.1,
-              ),
+                  height: height * 0.2,
+                  child: Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                    child: Padding(
+                      padding: EdgeInsets.all(height * 0.01),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('September, 2022'),
+                              IconButton(
+                                icon: SvgPicture.asset(
+                                  'assets/icons/calendar-event-fill.svg',
+
+                                  //width: 230,
+                                  //height: 235,
+                                ),
+                                tooltip: '',
+                                onPressed: () {},
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
               SvgPicture.asset(
                 'assets/images/pana.svg',
                 width: width * 0.4,

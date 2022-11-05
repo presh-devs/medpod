@@ -38,7 +38,8 @@ class _MedicalConditionState extends State<MedicalCondition> {
           ]),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+          padding: EdgeInsets.symmetric(
+              horizontal: width * 0.04, vertical: height * 0.02),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
