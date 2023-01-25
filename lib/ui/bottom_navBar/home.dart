@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                               Text('September, 2022'),
                               IconButton(
                                 icon: SvgPicture.asset(
-                                  'assets/icons/calendar-event-fill.svg',
+                                  'assets/icons/calendar.svg',
 
                                   //width: 230,
                                   //height: 235,
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   )),
+              SizedBox(height: 24,),
               SvgPicture.asset(
                 'assets/images/pana.svg',
                 width: width * 0.4,
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      fullscreenDialog: true,
+                      fullscreenDialog: false,
                       builder: (context) => AddMed(),
                     ),
                   );

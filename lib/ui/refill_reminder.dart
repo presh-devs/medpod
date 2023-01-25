@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/text_styles.dart';
-
+import '../utilities/common_widgets/headerRow.dart';
 class RefillReminder extends StatefulWidget {
   const RefillReminder({Key? key}) : super(key: key);
 
@@ -25,7 +25,7 @@ class _RefillReminderState extends State<RefillReminder> {
         actions: [
           CustomProgressIndicator(
             width: width,
-            progress: '5/5',
+            progress: '4/4',
             percent: 1.0,
           )
         ],
@@ -35,10 +35,8 @@ class _RefillReminderState extends State<RefillReminder> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Refill Reminder',
-              style: kMediumBody2TextStyle,
-            ),
+            buildHeaderRow1(title: 'Reminder Schedule', imageUrl: 'assets/icons/clock.png'),
+//: TODO add icon url
             SizedBox(
               height: height * 0.018,
             ),

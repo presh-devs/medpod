@@ -5,9 +5,13 @@ import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:medpod/utilities/constants/text_styles.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '../utilities/common_widgets/alingedText.dart';
 import '../utilities/common_widgets/dropdownButton.dart';
+import '../utilities/common_widgets/headerRow.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
+import '../utilities/constants/button_style.dart';
 import 'bottom_navBar/medication.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddMed extends StatefulWidget {
   const AddMed({Key? key}) : super(key: key);
@@ -51,7 +55,7 @@ class _AddMedState extends State<AddMed> {
           CustomProgressIndicator(
             width: width,
             progress: '1/5',
-            percent: 0.2,
+            percent: 0.25,
           ),
         ],
       ),
@@ -59,64 +63,96 @@ class _AddMedState extends State<AddMed> {
         child: Padding(
           padding: const EdgeInsets.all(22.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Add Medication',
-                  style: kMediumBody2TextStyle.copyWith(color: Colors.black),
+                child: Row(
+                  children: [
+                    buildHeaderRow1(title: 'Add Medication', imageUrl: 'assets/icons/med.png'),
+
+                  ],
                 ),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(
-                    height: height * 0.06,
-                  ),
-                  TextField(
-                    controller: medicine,
-                    decoration: InputDecoration(
-                      enabled: true,
-// hintText: '@gmail.com',
-                      labelText: 'Medicine Name',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 22,
-                  ),
+              SizedBox(
+                height: height * 0.06,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                  child: Text('Medicine Name')),
+              SizedBox(
+                height: height * 0.015,
+              ),
+              TextField(
+                controller: medicine,
+                decoration:const InputDecoration(
+                  enabled: true,
+
+                  border:  kBorder,
+                ),
+              ),
+               SizedBox(
+                height: height * 0.04,
+              ),
+              AlignedText(text: 'Medicine Type'),
+              SizedBox(
+                height: height * 0.01,
+              ),
+
                   buildDrugTypeDropdown(),
-                  const SizedBox(
-                    height: 22,
-                  ),
-                  ListTile(
-                    leading: SizedBox(
-                      width: 200,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          enabled: true,
-                          labelText: 'Med Strength per $selectedDrugType',
-                        ),
-                      ),
-                    ),
-                    trailing: buildUnitsDropdown(),
-                  ),
+
+               SizedBox(
+                 height: height * 0.04,
+              ),AlignedText(text: 'Medicine Unit'),
+
+              SizedBox(
+                height: height * 0.01,
+              ),Container(
+                height: 65,
+                decoration: BoxDecoration(
+                  // color: Colors.grey,
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(15),
+
+                ),
+                child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
                   SizedBox(
-                    height: height * 0.1,
+                    width: width * 0.35,
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+                      child: TextField(
+                      decoration: InputDecoration(
+                        enabled: true,
+                       // labelText: 'Med Strength per $selectedDrugType',
+                        // border:  kBorder,
+                      ),
+                ),
+                    ),
+                  ),Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: buildUnitsDropdown(),
                   ),
-                  CustomButton(
-                    title: 'Next',
-                    isButtonDisabled: medicine.text.isEmpty ? true : false,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          fullscreenDialog: false,
-                          builder: (context) => const MedicalCondition(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                ],),
+              ),
+
+              SizedBox(
+                height: height * 0.085,
+              ),
+              CustomButton(
+                title: 'Next',
+                isButtonDisabled: medicine.text.isEmpty ? true : false,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      fullscreenDialog: false,
+                      builder: (context) => const MedicalCondition(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -134,24 +170,98 @@ class _AddMedState extends State<AddMed> {
         });
       },
       dropdownValue: selectedDrugType,
-      isExpanded: true,
+      isExpanded: true, title: 'Medicine Type', hintText: 'Select Medicine Type',
     );
   }
 
   Widget buildUnitsDropdown() {
-    return CustomDropdownButton(
-      items: units,
-      onChanged: (String? newValue) {
-        setState(() {
-          selectedUnit = newValue!;
-        });
-      },
-      dropdownValue: selectedUnit,
-      isExpanded: false,
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        icon: SvgPicture.asset(
+          'assets/icons/arrowd.svg',
+
+        ),
+        hint: Text(
+          'mg',
+          style: TextStyle(
+            fontSize: 14,
+            color: Theme
+                .of(context)
+                .hintColor,
+          ),
+        ),
+        items: units
+            .map((item) =>
+            DropdownMenuItem<String>(
+              value: item,
+              child: Text(
+                item,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ))
+            .toList(),
+        value: selectedUnit,
+        onChanged: (value) {
+          setState(() {
+            selectedUnit = value as String;
+          });
+        },
+        buttonHeight: 40,
+        buttonWidth: 60,
+        itemHeight: 40,
+      ),
     );
   }
 }
 
+
+// CustomDropdownButton(
+// items: units,
+// onChanged: (String? newValue) {
+// setState(() {
+// selectedUnit = newValue!;
+// });
+// },
+// dropdownValue: selectedUnit,
+// isExpanded: false, title: 'Unit', hintText: 'Please select unit',
+// );
+
+// DropdownButtonHideUnderline(
+// child: DropdownButton2(
+// hint: Text(
+// 'Select Item',
+// style: TextStyle(
+// fontSize: 14,
+// color: Theme
+//     .of(context)
+//     .hintColor,
+// ),
+// ),
+// items: items
+//     .map((item) =>
+// DropdownMenuItem<String>(
+// value: item,
+// child: Text(
+// item,
+// style: const TextStyle(
+// fontSize: 14,
+// ),
+// ),
+// ))
+//     .toList(),
+// value: selectedValue,
+// onChanged: (value) {
+// setState(() {
+// selectedValue = value as String;
+// });
+// },
+// buttonHeight: 40,
+// buttonWidth: 140,
+// itemHeight: 40,
+// ),
+// ),
 // List<String> dosage = <String>[
 //   'Once a day',
 //   'Twice a day',

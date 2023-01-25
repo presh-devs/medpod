@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:medpod/ui/usage_frequency.dart';
+import 'package:medpod/ui/reminder_schedule.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../utilities/common_widgets/button.dart';
+import '../utilities/common_widgets/headerRow.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/colors.dart';
 import '../utilities/constants/text_styles.dart';
@@ -32,8 +33,8 @@ class _MedicalConditionState extends State<MedicalCondition> {
           actions: [
             CustomProgressIndicator(
               width: width,
-              progress: '2/5',
-              percent: 0.4,
+              progress: '2/4',
+              percent: 0.5,
             )
           ]),
       body: SingleChildScrollView(
@@ -43,10 +44,8 @@ class _MedicalConditionState extends State<MedicalCondition> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Medical Condition',
-                style: kBodyLTextStyle1,
-              ),
+              buildHeaderRow1(title: 'Medical Condition', imageUrl: 'assets/icons/stethoscope.png'),
+//: TODO add icon url
               SizedBox(
                 height: height * 0.02,
               ),
@@ -71,7 +70,7 @@ class _MedicalConditionState extends State<MedicalCondition> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  UsageFrequency(),
+                                  ScheduleReminder(),
                             ),
                           );
                         },

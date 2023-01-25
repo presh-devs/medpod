@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 
+import '../../utilities/common_widgets/headerRow.dart';
 import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../addMed.dart';
@@ -45,11 +46,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
         title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Text('Good Morning'),
-                Image.asset('assets/images/sun.png'),
-              ]),
-              Align(alignment: Alignment.centerLeft, child: Text('Iyanu')),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: buildHeaderRow(title: 'Good Morning', imageUrl: 'assets/images/sun.png',
+                ),
+              ),
+              Align(alignment: Alignment.centerLeft, child: Text('  Iyanu')),
             ]),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -121,4 +123,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
     );
   }
+
+
 }

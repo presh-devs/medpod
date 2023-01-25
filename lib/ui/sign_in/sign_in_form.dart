@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import '../../utilities/constants/button_style.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../bottom_navBar/bottomNavBar.dart';
 import 'sign_in_model.dart';
@@ -93,10 +94,11 @@ class _SignInFormState extends State<SignInForm> {
         height: height * 0.08,
       ),
       _buildNameTextField(),
+      const SizedBox(height: 16.0),
       _buildEmailTextField(),
-      const SizedBox(height: 8.0),
+      const SizedBox(height: 16.0),
       _buildPasswordTextField(),
-      const SizedBox(height: 8.0),
+      const SizedBox(height: 16.0),
       model.forgotPassword!,
       CustomButton(
         isButtonDisabled: model.canSubmit ? false : true,
@@ -187,6 +189,7 @@ class _SignInFormState extends State<SignInForm> {
       focusNode: _passwordFocusNode,
       controller: _passwordController,
       decoration: InputDecoration(
+        border:  kBorder,
         enabled: model.isLoading == false,
         labelText: 'Password',
         errorText: model.passwordErrorText,
@@ -215,6 +218,7 @@ class _SignInFormState extends State<SignInForm> {
         // hintText: '@gmail.com',
         labelText: 'Email',
         errorText: model.emailErrorText,
+        border:  kBorder,
       ),
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
@@ -234,6 +238,7 @@ class _SignInFormState extends State<SignInForm> {
               // hintText: '@gmail.com',
               labelText: 'First Name',
               errorText: model.emailErrorText,
+              border:  kBorder,
             ),
             autocorrect: false,
             keyboardType: TextInputType.text,
@@ -247,7 +252,7 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

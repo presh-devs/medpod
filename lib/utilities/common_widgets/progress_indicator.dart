@@ -17,22 +17,25 @@ class CustomProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('    $progress'),
-        const SizedBox(
-          height: 5,
-        ),
-        LinearPercentIndicator(
-          width: width * 0.23,
-          lineHeight: 8,
-          percent: percent,
-          progressColor: kPrimaryColor,
-          barRadius: const Radius.circular(6),
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.only(right: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('    $progress'),
+          const SizedBox(
+            height: 5,
+          ),
+          LinearPercentIndicator(
+            width: width * 0.23,
+            lineHeight: 8,
+            percent: percent,
+            progressColor: kPrimaryColor,
+            barRadius: const Radius.circular(6),
+          )
+        ],
+      ),
     );
   }
 }
