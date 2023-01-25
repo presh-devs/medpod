@@ -41,10 +41,11 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     ).then((value) {
       setState(() {
         _startDateTime = value!;
+        getStartMonth(_startDateTime.month.toString());
       });
     });
 
-    getStartMonth(_startDateTime.month.toString());
+
 
   }
 
@@ -57,9 +58,10 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     ).then((value) {
       setState(() {
         _endDateTime = value!;
+        getEndMonth(_endDateTime.month.toString());
       });
     });
-    getEndMonth(_endDateTime.month.toString());
+
   }
 
   var _months = {
