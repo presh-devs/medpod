@@ -114,7 +114,7 @@ class _SignInFormState extends State<SignInForm> {
             width: width * 0.23,
             color: Colors.black54,
           ),
-          Text('or Login with'),
+          const Text('or Login with'),
           Container(
             height: 1,
             width: width * 0.23,

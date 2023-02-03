@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medpod/ui/medical_condition.dart';
+import 'package:medpod/ui/refill_reminder.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:medpod/utilities/constants/text_styles.dart';
@@ -22,6 +23,7 @@ class AddMed extends StatefulWidget {
 
 class _AddMedState extends State<AddMed> {
   final TextEditingController medicine = TextEditingController();
+  final TextEditingController quantity = TextEditingController();
   String selectedDrugType = 'Pills';
   List<String> drugType = <String>[
     'Pills',
@@ -54,7 +56,7 @@ class _AddMedState extends State<AddMed> {
         actions: [
           CustomProgressIndicator(
             width: width,
-            progress: '1/5',
+            progress: '1/4',
             percent: 0.25,
           ),
         ],
@@ -69,8 +71,9 @@ class _AddMedState extends State<AddMed> {
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
-                    buildHeaderRow1(title: 'Add Medication', imageUrl: 'assets/icons/med.png'),
-
+                    buildHeaderRow1(
+                        title: 'Add Medication',
+                        imageUrl: 'assets/icons/med.png'),
                   ],
                 ),
               ),
@@ -78,66 +81,66 @@ class _AddMedState extends State<AddMed> {
                 height: height * 0.06,
               ),
               Align(
-                alignment: Alignment.centerLeft,
+                  alignment: Alignment.centerLeft,
                   child: Text('Medicine Name')),
               SizedBox(
                 height: height * 0.015,
               ),
               TextField(
                 controller: medicine,
-                decoration:const InputDecoration(
+                decoration: const InputDecoration(
                   enabled: true,
-
-                  border:  kBorder,
+                  border: kBorder,
                 ),
               ),
-               SizedBox(
+              SizedBox(
                 height: height * 0.04,
               ),
               AlignedText(text: 'Medicine Type'),
               SizedBox(
                 height: height * 0.01,
               ),
-
-                  buildDrugTypeDropdown(),
-
-               SizedBox(
-                 height: height * 0.04,
-              ),AlignedText(text: 'Medicine Unit'),
-
+              buildDrugTypeDropdown(),
+              SizedBox(
+                height: height * 0.04,
+              ),
+              AlignedText(text: 'Medicine Unit'),
               SizedBox(
                 height: height * 0.01,
-              ),Container(
+              ),
+              Container(
                 height: 65,
                 decoration: BoxDecoration(
                   // color: Colors.grey,
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(15),
-
                 ),
                 child: Row(
-                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                  SizedBox(
-                    width: width * 0.35,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-                      child: TextField(
-                      decoration: InputDecoration(
-                        enabled: true,
-                       // labelText: 'Med Strength per $selectedDrugType',
-                        // border:  kBorder,
+                    SizedBox(
+                      width: width * 0.35,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0, vertical: 16),
+                        child: TextField(
+                          controller: quantity,
+                          decoration: const InputDecoration(
+                            enabled: true,
+                            // labelText: 'Med Strength per $selectedDrugType',
+                            // border:  kBorder,
+                          ),
+                        ),
                       ),
-                ),
                     ),
-                  ),Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: buildUnitsDropdown(),
-                  ),
-                ],),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: buildUnitsDropdown(),
+                    ),
+                  ],
+                ),
               ),
-
               SizedBox(
                 height: height * 0.085,
               ),
@@ -149,7 +152,11 @@ class _AddMedState extends State<AddMed> {
                     context,
                     MaterialPageRoute(
                       fullscreenDialog: false,
-                      builder: (context) => const MedicalCondition(),
+                      builder: (context) => MedicalCondition(
+                          medName: medicine.text,
+                          selectedDrugType: selectedDrugType,
+                          selectedUnit: selectedUnit,
+                          quantity: quantity.text),
                     ),
                   );
                 },
@@ -170,7 +177,9 @@ class _AddMedState extends State<AddMed> {
         });
       },
       dropdownValue: selectedDrugType,
-      isExpanded: true, title: 'Medicine Type', hintText: 'Select Medicine Type',
+      isExpanded: true,
+      title: 'Medicine Type',
+      hintText: 'Select Medicine Type',
     );
   }
 
@@ -179,28 +188,24 @@ class _AddMedState extends State<AddMed> {
       child: DropdownButton2(
         icon: SvgPicture.asset(
           'assets/icons/arrowd.svg',
-
         ),
         hint: Text(
           'mg',
           style: TextStyle(
             fontSize: 14,
-            color: Theme
-                .of(context)
-                .hintColor,
+            color: Theme.of(context).hintColor,
           ),
         ),
         items: units
-            .map((item) =>
-            DropdownMenuItem<String>(
-              value: item,
-              child: Text(
-                item,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ))
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ))
             .toList(),
         value: selectedUnit,
         onChanged: (value) {
@@ -215,7 +220,6 @@ class _AddMedState extends State<AddMed> {
     );
   }
 }
-
 
 // CustomDropdownButton(
 // items: units,

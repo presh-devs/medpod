@@ -5,6 +5,10 @@ import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'models/med.dart';
 
 int? isViewed;
 
@@ -14,6 +18,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onBoard');
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(MedAdapter());
+  await Hive.openBox<Med>('meds');
+
   runApp(const MyApp());
 }
 

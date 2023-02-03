@@ -24,11 +24,14 @@ class MedicationPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: 1,
                   itemBuilder: (BuildContext context, int index) {
-                    return const ListTile(
-                      leading: Icon(Icons.close),
-                      title: Text('Hydroxyurea'),
-                      subtitle: Text('100 pill(s) left'),
-                      trailing: Icon(Icons.ac_unit_outlined),
+                    return Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                      child: const ListTile(
+                        leading: Icon(Icons.close),
+                        title: Text('Hydroxyurea'),
+                        subtitle: Text('100 pill(s) left'),
+                        trailing: Icon(Icons.ac_unit_outlined),
+                      ),
                     );
                   }),
             ],

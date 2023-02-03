@@ -1,16 +1,69 @@
 import 'package:flutter/material.dart';
-
+import 'package:medpod/models/med.dart';
+import 'package:medpod/ui/bottom_navBar/bottomNavBar.dart';
+import 'package:medpod/ui/reminder_schedule.dart';
+import '../models/boxes.dart';
+import '../utilities/common_widgets/button.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
-import '../utilities/constants/text_styles.dart';
 import '../utilities/common_widgets/headerRow.dart';
+
 class RefillReminder extends StatefulWidget {
-  const RefillReminder({Key? key}) : super(key: key);
+  const RefillReminder(
+      {Key? key,
+      required this.medName,
+      required this.selectedDrugType,
+      required this.selectedUnit,
+      required this.quantity,
+      required this.medCon,
+      required this.time,
+      required this.startDate,
+      required this.endDate,
+      required this.frequency})
+      : super(key: key);
+  final String medName;
+  final String selectedDrugType;
+  final String selectedUnit;
+  final String quantity;
+  final String medCon;
+  final String time;
+  final String startDate;
+  final String endDate;
+  final String frequency;
 
   @override
   State<RefillReminder> createState() => _RefillReminderState();
 }
 
 class _RefillReminderState extends State<RefillReminder> {
+  Future? addmed(
+      String name,
+      String medType,
+      String unit,
+      String quantity,
+      String medicalCondition,
+      String frequency,
+      String time,
+      String startDate,
+      String endDate,
+      String currentSupply,
+      String minimumSupply) {
+    final meds = Med()
+      ..name = name
+      ..medType = medType
+      ..unit = unit
+      ..quantity = quantity
+      ..medicalCondition = medicalCondition
+      ..frequency = frequency
+      ..time = time
+      ..endDate = endDate
+      ..startDate = startDate
+      ..currentSupply = currentSupply
+      ..minimumSupply = minimumSupply;
+
+    final box = Boxes.getMeds();
+    box.add(meds);
+  }
+
   String? remindMe;
   @override
   Widget build(BuildContext context) {
@@ -35,8 +88,8 @@ class _RefillReminderState extends State<RefillReminder> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildHeaderRow1(title: 'Reminder Schedule', imageUrl: 'assets/icons/clock.png'),
-//: TODO add icon url
+            buildHeaderRow1(
+                title: 'Refill Reminder', imageUrl: 'assets/icons/clock.png'),
             SizedBox(
               height: height * 0.018,
             ),
@@ -51,11 +104,70 @@ class _RefillReminderState extends State<RefillReminder> {
                     groupValue: remindMe,
                     onChanged: (value) {
                       setState(() {
-                        // remindMe = value.toString();
+                        remindMe = value.toString();
                       });
                     }),
                 Text('Remind me'),
               ],
+            ),
+            SizedBox(
+              height: height * 0.05,
+            ),
+            Row(
+              children: [
+                Text('Current Suppy'),
+                SizedBox(
+                  width: width * 0.3,
+                ),
+                Text('Minimum Suppy'),
+              ],
+            ),
+            SizedBox(
+              height: height * 0.01,
+            ),
+            Row(
+              children: [
+                smallContainer(
+                  iconUrl: 'assets/icons/clock.svg',
+                  text: '-pills',
+                  onTap: () {},
+                ),
+                SizedBox(width: width * 0.07),
+                smallContainer(
+                  iconUrl: 'assets/icons/bluePill.svg',
+                  text: '2 pills',
+                  onTap: () {},
+                ),
+              ],
+            ),
+            SizedBox(
+              height: height * 0.05,
+            ),
+            CustomButton(
+              title: 'Next',
+              isButtonDisabled: false,
+              onPressed: () {
+                //:Todo update min and current supply
+                addmed(
+                    widget.medName,
+                    widget.selectedDrugType,
+                    widget.selectedUnit,
+                    widget.quantity,
+                    widget.medCon,
+                    widget.frequency,
+                    widget.time,
+                    widget.startDate,
+                    widget.endDate,
+                    'currentSupply',
+                    'minimumSupply');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    fullscreenDialog: false,
+                    builder: (context) => const BottomNavBar(),
+                  ),
+                );
+              },
             ),
           ],
         ),

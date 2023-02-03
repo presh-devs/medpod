@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medpod/ui/onboarding/onboard_model.dart';
+import 'package:medpod/ui/sign_in/sign_in_model.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:medpod/utilities/constants/text_styles.dart';
@@ -191,7 +192,10 @@ class _OnboardState extends State<Onboard> {
               padding: const EdgeInsets.only(bottom: 10),
               child: TextButton(
                 onPressed: () {
-                  // Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => Home()));
+                  SignInModel model = SignInModel();
+                  model.formType = EmailFormType.signUp;
+                  // Navigator.pushReplacement(context,
+                  // MaterialPageRoute(builder:(context) => Home()));
                 },
                 child: const Text(
                   'New to medpod? Sign up',

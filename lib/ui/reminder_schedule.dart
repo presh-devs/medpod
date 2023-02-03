@@ -10,7 +10,15 @@ import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/text_styles.dart';
 
 class ScheduleReminder extends StatefulWidget {
-  const ScheduleReminder({Key? key}) : super(key: key);
+  final String medName;
+  final String selectedDrugType;
+  final String selectedUnit;
+  final String quantity;
+  final String medCon;
+  const ScheduleReminder({Key? key, required this.medName,
+  required this.selectedDrugType,
+    required this.selectedUnit,
+    required this.quantity, required this.medCon}) : super(key: key);
 
   @override
   State<ScheduleReminder> createState() => _ScheduleReminderState();
@@ -20,8 +28,8 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
   TimeOfDay _time = const TimeOfDay(hour: 4, minute: 00);
   DateTime _startDateTime = DateTime.now();
   DateTime _endDateTime = DateTime.now();
-  var startDate;
-  var endDate;
+  var startDate = 'Jan';
+  var endDate = 'Jan';
 
   void _showTimePicker() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
@@ -83,7 +91,7 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
 for (var key in _months.keys){
   if (date == key){
     var month = _months[date];
-    startDate = month;
+    startDate = month!;
     print(startDate) ;
   }
 
@@ -93,8 +101,7 @@ for (var key in _months.keys){
     for (var key in _months.keys){
       if (date == key){
         var month = _months[date];
-        endDate = month;
-        print(endDate) ;
+        endDate = month!;
       }
 
     } return endDate;
@@ -104,7 +111,8 @@ for (var key in _months.keys){
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
+    String formattedStartDate ='$startDate,${_startDateTime.day.toString()}';
+    String formattedEndDate ='$endDate,${_endDateTime.day.toString()}';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -221,8 +229,18 @@ for (var key in _months.keys){
                 Navigator.push(
                   context,
                   MaterialPageRoute(
+
                     fullscreenDialog: false,
-                    builder: (context) => const RefillReminder(),
+                    builder: (context) => RefillReminder(medName: widget.medName,
+                        selectedDrugType: widget.selectedDrugType,
+                        selectedUnit: widget.selectedUnit,
+                        quantity: widget.quantity,
+                        medCon: widget.medCon,
+                      time: _time.format(context).toString(),
+                      startDate: formattedStartDate,
+                        endDate: formattedEndDate,
+                      frequency: selectedFrequency,
+                    ),
                   ),
                 );
               },

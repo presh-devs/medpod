@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medpod/ui/refill_reminder.dart';
 import 'package:medpod/ui/reminder_schedule.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -11,7 +12,17 @@ import '../utilities/constants/text_styles.dart';
 enum MedCon { other, pnts }
 
 class MedicalCondition extends StatefulWidget {
-  const MedicalCondition({Key? key}) : super(key: key);
+  final String medName;
+  final String selectedDrugType;
+  final String selectedUnit;
+  final String quantity;
+  const MedicalCondition(
+      {Key? key,
+      required this.medName,
+      required this.selectedDrugType,
+      required this.selectedUnit,
+      required this.quantity})
+      : super(key: key);
 
   @override
   State<MedicalCondition> createState() => _MedicalConditionState();
@@ -44,7 +55,9 @@ class _MedicalConditionState extends State<MedicalCondition> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildHeaderRow1(title: 'Medical Condition', imageUrl: 'assets/icons/stethoscope.png'),
+              buildHeaderRow1(
+                  title: 'Medical Condition',
+                  imageUrl: 'assets/icons/stethoscope.png'),
 //: TODO add icon url
               SizedBox(
                 height: height * 0.02,
@@ -67,10 +80,15 @@ class _MedicalConditionState extends State<MedicalCondition> {
                           foregroundColor: kPrimaryTextColor,
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
+                                                   Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  ScheduleReminder(),
+                                  ScheduleReminder(medName: widget.medName,
+                                      selectedDrugType: widget.selectedDrugType,
+                                      selectedUnit: widget.selectedUnit,
+                                      quantity: widget.quantity,
+                                    medCon: medicalCondition[index],
+                                  ),
                             ),
                           );
                         },
