@@ -10,7 +10,7 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
     this.email,
     this.name,
     this.password,
-    this.formType = EmailFormType.signIn,
+   required  this.formType ,
     this.isLoading = false,
     this.submitted = false,
     this.passwordVisible = false,
@@ -18,7 +18,7 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
   String? name;
   String? email;
   String? password;
-  EmailFormType formType;
+  late final EmailFormType? formType;
   bool isLoading;
   bool submitted;
   bool passwordVisible;

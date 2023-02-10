@@ -7,10 +7,13 @@ import 'package:medpod/utilities/common_widgets/button.dart';
 
 import '../../models/boxes.dart';
 import '../../models/med.dart';
+import '../../services/auth.dart';
 import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../addMed.dart';
 import '../sign_in/sign_in_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,12 +23,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Auth auth = Auth();
+  final User? user = Auth().currentUser;
+
+  Future<void> signOut()async{
+    await auth.signOut();
+  }
+
   @override
   void dispose() {
     Hive.box('meds').close();
     super.dispose();
   }
+@override
+  void initState() {
 
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

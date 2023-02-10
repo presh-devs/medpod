@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "999053977454",
+    "project_id": "medpod-9dccf",
+    "storage_bucket": "medpod-9dccf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999053977454:android:345174b53cc7b4a917837f",
+        "android_client_info": {
+          "package_name": "com.example.medpod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999053977454-019co2molhuc4ncafn3dv5sbf4khr9k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSKDVoITCUog-apP1lH3YVGuHCM1qVcz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999053977454-019co2molhuc4ncafn3dv5sbf4khr9k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

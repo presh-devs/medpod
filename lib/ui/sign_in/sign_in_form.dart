@@ -16,17 +16,20 @@ var height = logicalScreenSize.height;
 var width = logicalScreenSize.width;
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key, required this.model}) : super(key: key);
+  const SignInForm({Key? key, required this.model,}) : super(key: key);
   final SignInModel model;
 
-  static Widget create(BuildContext context) {
+
+  static Widget create(BuildContext context, var sformType) {
+
     //final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<SignInModel>(
-      create: (_) => SignInModel(
+      create: (_) => SignInModel(formType: sformType
+
           //auth: auth
           ),
       child: Consumer<SignInModel>(
-        builder: (_, model, __) => SignInForm(model: model),
+        builder: (_, model, __) => SignInForm(model: model, ),
       ),
     );
   }

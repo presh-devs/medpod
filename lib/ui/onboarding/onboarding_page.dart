@@ -181,6 +181,7 @@ class _OnboardState extends State<Onboard> {
                   MaterialPageRoute(
                     fullscreenDialog: true,
                     builder: (context) => SignInPage(
+                      formType: EmailFormType.signIn,
                       isLoading: isLoading,
                     ),
                   ),
@@ -192,10 +193,9 @@ class _OnboardState extends State<Onboard> {
               padding: const EdgeInsets.only(bottom: 10),
               child: TextButton(
                 onPressed: () {
-                  SignInModel model = SignInModel();
-                  model.formType = EmailFormType.signUp;
-                  // Navigator.pushReplacement(context,
-                  // MaterialPageRoute(builder:(context) => Home()));
+
+                  Navigator.pushReplacement(context,
+                   MaterialPageRoute(builder:(context) => SignInPage(isLoading: isLoading, formType: EmailFormType.signUp,)));
                 },
                 child: const Text(
                   'New to medpod? Sign up',

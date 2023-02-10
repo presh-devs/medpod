@@ -7,10 +7,11 @@ class SignInPage extends StatefulWidget {
   const SignInPage({
     Key? key,
     // required this.manager,
-    required this.isLoading,
+    required this.isLoading,  required this.formType,
   }) : super(key: key);
   // final SignInManager manager;
   final isLoading;
+  final EmailFormType formType;
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -27,6 +28,7 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget _buildContent(BuildContext context) {
     final SignInModel model;
+
     return Padding(
       padding: const EdgeInsets.all(22.0),
       child: SingleChildScrollView(
@@ -53,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
             //   textColor: Colors.white,
             // ),
 
-            SignInForm.create(context),
+            SignInForm.create(context,widget.formType),
           ],
         ),
       ),
