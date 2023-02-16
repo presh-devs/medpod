@@ -1,16 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../services/auth.dart';
 import '../../utilities/constants/text_styles.dart';
 import 'validators.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum EmailFormType { signIn, signUp }
 
 class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
+  final AuthBase auth;
   SignInModel({
+    required this.auth,
     this.email,
     this.name,
     this.password,
-   required  this.formType ,
+    required this.formType,
     this.isLoading = false,
     this.submitted = false,
     this.passwordVisible = false,
@@ -18,7 +23,7 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
   String? name;
   String? email;
   String? password;
-  late final EmailFormType? formType;
+  EmailFormType? formType;
   bool isLoading;
   bool submitted;
   bool passwordVisible;
@@ -26,10 +31,33 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
   Future<void> submit() async {
     updateWith(isLoading: true, submitted: true);
     try {
-      if (formType == EmailFormType.signIn) {}
+      if (formType == EmailFormType.signIn) {
+        await auth.signInWithEmailAndPassword(
+          email,
+          password,
+        );
+      } else {
+        await auth.createUserWithEmailAndPassword(
+name,
+          email,
+          password,
+
+
+        );
+      }
     } catch (e) {
       updateWith(isLoading: false);
+      rethrow;
     }
+  }
+
+//Todo: add user details after signUp.
+  void addUserDetails(String id, String fName) {
+    DocumentReference users = FirebaseFirestore.instance.doc('users/$id');
+    users.set({
+      'id': id,
+      'fName': fName,
+    });
   }
 
   // bool get visibility {

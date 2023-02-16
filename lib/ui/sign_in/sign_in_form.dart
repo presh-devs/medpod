@@ -1,9 +1,10 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import '../../services/auth.dart';
 import '../../utilities/constants/button_style.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../bottom_navBar/bottomNavBar.dart';
@@ -16,20 +17,23 @@ var height = logicalScreenSize.height;
 var width = logicalScreenSize.width;
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key, required this.model,}) : super(key: key);
+  const SignInForm({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
   final SignInModel model;
 
-
   static Widget create(BuildContext context, var sformType) {
-
-    //final auth = Provider.of<AuthBase>(context, listen: false);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     return ChangeNotifierProvider<SignInModel>(
-      create: (_) => SignInModel(formType: sformType
-
-          //auth: auth
-          ),
+      create: (_) => SignInModel(
+        formType: sformType,
+        auth: auth,
+      ),
       child: Consumer<SignInModel>(
-        builder: (_, model, __) => SignInForm(model: model, ),
+        builder: (_, model, __) => SignInForm(
+          model: model,
+        ),
       ),
     );
   }
@@ -59,27 +63,33 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Future<void> _submit() async {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-          fullscreenDialog: true, builder: (context) => BottomNavBar()),
-    );
-    // try {
-    //   await model.submit();
-    //   Navigator.of(context).pop();
-    // } on FirebaseAuthException catch (e) {
-    //   showExceptionAlertDialog(
-    //     context,
-    //     exception: e,
-    //     title: 'Sign in failed',
-    //   );
-    // }
+    //model.name = _nameController.text;
+
+    try {
+      await model.submit();
+      //Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            fullscreenDialog: true, builder: (context) => BottomNavBar()),
+      );
+    } on FirebaseAuthException catch (e) {
+      //Todo: Handle exception
+      // showExceptionAlertDialog(
+      //   context,
+      //   exception: e,
+      //   title: 'Sign in failed',
+      //);
+    }
   }
 
   void _toggleFormType() {
     _emailController.clear;
     _nameController.clear;
     _passwordController.clear;
-    model.toggleFormType();
+        setState(() {
+          model.toggleFormType();
+
+        });
   }
 
   void _togglePasswordIcon() {
@@ -192,7 +202,7 @@ class _SignInFormState extends State<SignInForm> {
       focusNode: _passwordFocusNode,
       controller: _passwordController,
       decoration: InputDecoration(
-        border:  kBorder,
+        border: kBorder,
         enabled: model.isLoading == false,
         labelText: 'Password',
         errorText: model.passwordErrorText,
@@ -221,7 +231,7 @@ class _SignInFormState extends State<SignInForm> {
         // hintText: '@gmail.com',
         labelText: 'Email',
         errorText: model.emailErrorText,
-        border:  kBorder,
+        border: kBorder,
       ),
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
@@ -241,7 +251,7 @@ class _SignInFormState extends State<SignInForm> {
               // hintText: '@gmail.com',
               labelText: 'First Name',
               errorText: model.emailErrorText,
-              border:  kBorder,
+              border: kBorder,
             ),
             autocorrect: false,
             keyboardType: TextInputType.text,
