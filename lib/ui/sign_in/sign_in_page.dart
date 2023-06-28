@@ -3,6 +3,8 @@ import 'package:medpod/ui/sign_in/sign_in_model.dart';
 import 'sign_in_form.dart';
 import 'sign_in_model.dart';
 
+
+final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 class SignInPage extends StatefulWidget {
   const SignInPage({
     Key? key,
@@ -23,6 +25,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildContent(context),
+      key:scaffoldKey,
     );
   }
 

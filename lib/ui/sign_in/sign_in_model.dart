@@ -38,26 +38,15 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
         );
       } else {
         await auth.createUserWithEmailAndPassword(
-name,
+          name,
           email,
           password,
-
-
         );
       }
     } catch (e) {
       updateWith(isLoading: false);
       rethrow;
     }
-  }
-
-//Todo: add user details after signUp.
-  void addUserDetails(String id, String fName) {
-    DocumentReference users = FirebaseFirestore.instance.doc('users/$id');
-    users.set({
-      'id': id,
-      'fName': fName,
-    });
   }
 
   // bool get visibility {

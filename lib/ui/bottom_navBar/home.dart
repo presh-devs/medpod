@@ -4,10 +4,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:medpod/utilities/common_widgets/alingedText.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
-
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import '../../models/boxes.dart';
 import '../../models/med.dart';
+import '../../models/medication.dart';
 import '../../services/auth.dart';
+import '../../services/firestore_service.dart';
 import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../addMed.dart';
@@ -26,6 +28,8 @@ class _HomePageState extends State<HomePage> {
   Auth auth = Auth();
   final User? user = Auth().currentUser;
 
+  final _service = FirestoreService.instance;
+
   Future<void> signOut()async{
     await auth.signOut();
   }
@@ -41,24 +45,37 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   final height = MediaQuery.of(context).size.height;
+  //   final width = MediaQuery.of(context).size.width;
+  //   return ValueListenableBuilder<Box<Med>>(
+  //     valueListenable: Boxes.getMeds().listenable(),
+  //     builder: (context, box, _) {
+  //       final meds = box.values.toList().cast<Med>();
+  //
+  //       return Scaffold(
+  //         backgroundColor: Colors.white,
+  //         body: buildContent(meds),
+  //         floatingActionButton: meds.isEmpty ? null : buildFAB(),
+  //       );
+  //     },
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return ValueListenableBuilder<Box<Med>>(
-      valueListenable: Boxes.getMeds().listenable(),
-      builder: (context, box, _) {
-        final meds = box.values.toList().cast<Med>();
 
         return Scaffold(
           backgroundColor: Colors.white,
-          body: buildContent(meds),
-          floatingActionButton: meds.isEmpty ? null : buildFAB(),
+          body: buildContent(),
+          floatingActionButton:
+          //meds.isEmpty ? null :
+          buildFAB(),
         );
-      },
-    );
-  }
 
+  }
   FloatingActionButton buildFAB() {
     return FloatingActionButton(
       onPressed: () => Navigator.of(context).push(
@@ -152,10 +169,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget buildContent(List<Med> meds) {
-    if (meds.isEmpty) {
-      return buildEmptyState(width, height, context);
-    } else {
+  Widget buildContent() {
+    // if (meds.isEmpty) {
+    //   return buildEmptyState(width, height, context);
+    // } else {
 
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -176,39 +193,50 @@ class _HomePageState extends State<HomePage> {
               height: 24,
             ),
             Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.all(8),
-                itemCount: meds.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final med = meds[index];
+              child:
+               FirestoreListView<Medication>(
+                 query: _service.medsQuery,
+                 itemBuilder: (context, snapshot) {
+                   // Data is now typed!
+                   Medication medication = snapshot.data();
 
-                  return buildMedTile(context, med);
-                },
-              ),
+                   return buildMedTile(context, medication);
+                 },
+               )
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   physics: AlwaysScrollableScrollPhysics(),
+              //   padding: EdgeInsets.all(8),
+              //   itemCount: meds.length,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     final med = meds[index];
+              //
+              //     return buildMedTile(context, med);
+              //   },
+              // ),
             ),
           ],
         ),
       );
-    }
+    //}
   }
 
-  Widget buildMedTile(BuildContext context, Med med) {
+  Widget buildMedTile(BuildContext context, Medication med) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: Colors.white,
         child: ListTile(
-          onLongPress: ()=> med.delete(),
+          onLongPress: () {
+                      },
           leading: SvgPicture.asset('assets/icons/medIcon.svg'),
                     title: Text(
-            med.name,
+            med.name!,
             maxLines: 2,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          subtitle: Text(med.unit),
+          subtitle: Text(med.unit!),
           trailing: Text(
             '',
           ),

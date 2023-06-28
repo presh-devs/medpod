@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
-
+import '../../services/auth.dart';
+import 'package:provider/provider.dart';
 import '../../utilities/common_widgets/headerRow.dart';
 import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
@@ -21,6 +22,18 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   bool isSelected = true;
   int currentIndex = 0;
+
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning';
+    }
+     if (hour < 17) {
+      return 'Good Afternoon';
+    }
+    return 'Good Evening';
+  }
+
   final screens = [
     const HomePage(),
     const MedicationPage(),
@@ -31,6 +44,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final auth = Provider.of<AuthBase>(context, listen: false);
+    auth.currentUser;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -48,10 +63,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: buildHeaderRow(title: 'Good Morning', imageUrl: 'assets/images/sun.png',
+                child: buildHeaderRow(title: greeting(), imageUrl: 'assets/images/sun.png',
                 ),
               ),
-              Align(alignment: Alignment.centerLeft, child: Text('  Iyanu')),
+              Align(alignment: Alignment.centerLeft, child:
+
+              Text('  ${auth.currentUser!.displayName!}')),
             ]),
         elevation: 0,
         backgroundColor: Colors.white,

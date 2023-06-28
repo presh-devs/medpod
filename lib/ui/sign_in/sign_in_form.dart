@@ -3,9 +3,12 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medpod/ui/sign_in/sign_in_page.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth.dart';
+import '../../utilities/common_widgets/show_exception-alertdailog.dart';
 import '../../utilities/constants/button_style.dart';
+import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
 import '../bottom_navBar/bottomNavBar.dart';
 import 'sign_in_model.dart';
@@ -62,10 +65,25 @@ class _SignInFormState extends State<SignInForm> {
     super.dispose();
   }
 
+
+
   Future<void> _submit() async {
     //model.name = _nameController.text;
+    SnackBar snackBar = SnackBar(
+      backgroundColor: kPrimaryColor,
+      content: Row(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(width: 20),
+          Text('Loading...'),
+
+        ],
+      ),
+    );
 
     try {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       await model.submit();
       //Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(
@@ -73,22 +91,24 @@ class _SignInFormState extends State<SignInForm> {
             fullscreenDialog: true, builder: (context) => BottomNavBar()),
       );
     } on FirebaseAuthException catch (e) {
-      //Todo: Handle exception
-      // showExceptionAlertDialog(
-      //   context,
-      //   exception: e,
-      //   title: 'Sign in failed',
-      //);
+    showExceptionAlertDialog(
+        context,
+        exception: e,
+        title: 'Sign in failed',
+      );
     }
   }
 
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+
   void _toggleFormType() {
-    _emailController.clear;
-    _nameController.clear;
-    _passwordController.clear;
+
         setState(() {
           model.toggleFormType();
-
+          _emailController.clear;
+          _nameController.clear;
+          _passwordController.clear;
         });
   }
 

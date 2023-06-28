@@ -44,12 +44,19 @@ class Auth implements AuthBase {
     String? email,
     String? password,
   ) async {
-    final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email!,
-      password: password!,
-    );
-    addUserDetails(fName!, userCredential.user);
-    return userCredential.user;
+    try{
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email!,
+        password: password!,
+      );
+      User? user = userCredential.user;
+      user?.updateDisplayName(fName);
+      addUserDetails(fName!, user);
+      return user;
+    } catch (e){
+      print(e);
+    }
+
   }
   //
   // @override
@@ -115,6 +122,7 @@ class Auth implements AuthBase {
           FirebaseFirestore.instance.doc('users/${user.uid}');
 
       users.set({
+        'email': user.email,
         'id': user.uid,
         'fName': fName,
       });
