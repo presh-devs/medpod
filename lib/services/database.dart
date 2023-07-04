@@ -6,9 +6,6 @@ import 'firestore_service.dart';
 abstract class Database {
   Future<void> setMed(Medication medication);
   void printMed();
-  // Future<void> deleteMed(Medication medication);
-  // Stream<List<Medication>> medsStream();
-
 }
 
 //String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -28,7 +25,6 @@ class FirestoreDatabase implements Database {
         data: medication.toMap(),
       );
 
-  Stream medications() => _service.medStream(path: APIPath.medList(uid));
 
 
   @override

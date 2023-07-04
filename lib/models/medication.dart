@@ -1,7 +1,6 @@
 class Medication {
   Medication(
-      {
-      this.name,
+      {this.name,
       this.medType,
       this.unit,
       this.quantity,
@@ -27,10 +26,8 @@ class Medication {
 
   factory Medication.fromMap(
     Map<dynamic, dynamic> value,
-
   ) {
     return Medication(
-
       name: value['name'],
       medType: value['medType'],
       unit: value['unit'],
@@ -47,7 +44,6 @@ class Medication {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-
       'name': name,
       'medType': medType,
       'unit': unit,

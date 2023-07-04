@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   final User? user = Auth().currentUser;
 
   final _service = FirestoreService.instance;
+  Medication medication = Medication();
 
   Future<void> signOut() async {
     await auth.signOut();
@@ -45,15 +46,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final height = MediaQuery.sizeOf(context).height;
-    // final width = MediaQuery.sizeOf(context).width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: buildContent(),
-      floatingActionButton:
-          _service.medsQuery != null  ? null :
-          buildFAB(),
+      floatingActionButton:  buildFAB(),
     );
   }
 
@@ -67,6 +63,46 @@ class _HomePageState extends State<HomePage> {
       ),
       child: const Icon(Icons.add),
     );
+  }
+
+  Widget buildContent() {
+    print('Inside Build content');
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          buildCalendarCard(height),
+          const SizedBox(
+            height: 24,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '10:00pm',
+              style: kBodyLTextStyle3,
+            ),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Expanded(
+            child: FirestoreListView<Medication>(
+              query: _service.getMedQuery(),
+              itemBuilder: (context, snapshot) {
+                medication = snapshot.data();
+                return buildMedTile(context, medication);
+                // Data is now typed!
+              },
+              emptyBuilder: (context) {
+                print("empty state");
+                return buildEmptyState(width, height, context);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+    //}
   }
 
   Column buildEmptyState(double width, double height, BuildContext context) {
@@ -90,58 +126,19 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: height * 0.03,
         ),
-        CustomButton(
-          title: 'Add med',
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                fullscreenDialog: false,
-                builder: (context) => const AddMed(),
-              ),
-            );
-          },
-          isButtonDisabled: false,
-        ),
+        // CustomButton(
+        //   title: 'Add med',
+        //   onPressed: () {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         fullscreenDialog: false,
+        //         builder: (context) => const AddMed(),
+        //       ),
+        //     );
+        //   },
+        //   isButtonDisabled: false,
+        // ),
       ],
     );
-  }
-
-  @override
-  Widget buildContent() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          buildCalendarCard(height),
-          const SizedBox(
-            height: 24,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '10:00pm',
-              style: kBodyLTextStyle3,
-            ),
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          Expanded(
-              child: FirestoreListView<Medication>(
-            query: _service.medsQuery,
-            itemBuilder: (context, snapshot) {
-              Medication medication = snapshot.data();
-              print(medication);
-              return buildMedTile(context, medication);
-              // Data is now typed!
-            },
-            emptyBuilder: (context) {
-              return buildEmptyState(width, height, context);
-            },
-          )),
-        ],
-      ),
-    );
-    //}
   }
 }

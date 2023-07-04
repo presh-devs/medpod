@@ -11,6 +11,7 @@ Widget buildMedTile(BuildContext context, Medication med) {
       color: Colors.white,
       child: ListTile(
         onLongPress: () {
+
         },
         leading: SvgPicture.asset('assets/icons/medIcon.svg'),
         title: Text(
