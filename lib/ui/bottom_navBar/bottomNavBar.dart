@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medpod/utilities/common_widgets/button.dart';
 import '../../services/auth.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/common_widgets/headerRow.dart';
 import '../../utilities/constants/colors.dart';
-import '../../utilities/constants/text_styles.dart';
-import '../addMed.dart';
 import 'feed.dart';
 import 'home.dart';
 import 'medication.dart';
@@ -42,8 +39,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    // final height = MediaQuery.sizeOf(context).height;
+    // final width = MediaQuery.of(context).size.width;
     final auth = Provider.of<AuthBase>(context, listen: false);
     auth.currentUser;
     return Scaffold(

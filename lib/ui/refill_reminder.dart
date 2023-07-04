@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:medpod/models/med.dart';
 import 'package:medpod/models/medication.dart';
 import 'package:medpod/services/database.dart';
 import 'package:medpod/ui/bottom_navBar/bottomNavBar.dart';
 import 'package:medpod/ui/reminder_schedule.dart';
 import 'package:provider/provider.dart';
-import '../models/boxes.dart';
 import '../services/auth.dart';
-import '../services/firestore_service.dart';
 import '../utilities/common_widgets/button.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/common_widgets/headerRow.dart';
@@ -42,46 +39,17 @@ class RefillReminder extends StatefulWidget {
 }
 
 class _RefillReminderState extends State<RefillReminder> {
-  final _service = FirestoreService.instance;
-  Future? addmed(
-      String name,
-      String medType,
-      String unit,
-      String quantity,
-      String medicalCondition,
-      String frequency,
-      String time,
-      String startDate,
-      String endDate,
-      String currentSupply,
-      String minimumSupply) {
-    final meds = Med()
-      ..name = name
-      ..medType = medType
-      ..unit = unit
-      ..quantity = quantity
-      ..medicalCondition = medicalCondition
-      ..frequency = frequency
-      ..time = time
-      ..endDate = endDate
-      ..startDate = startDate
-      ..currentSupply = currentSupply
-      ..minimumSupply = minimumSupply;
-
-    final box = Boxes.getMeds();
-    box.add(meds);
-  }
-
-  void submit() {}
+  // final _service = FirestoreService.instance;
 
   String? remindMe;
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
     auth.currentUser;
-    //final database = Provider.of<Database>(context, listen: false);
+
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     Medication medication = Medication()
       ..name = widget.medName
       ..medType = widget.selectedDrugType
@@ -137,7 +105,7 @@ class _RefillReminderState extends State<RefillReminder> {
                             remindMe = value.toString();
                           });
                         }),
-                    Text('Remind me'),
+                    const Text('Remind me'),
                   ],
                 ),
                 SizedBox(
@@ -145,11 +113,11 @@ class _RefillReminderState extends State<RefillReminder> {
                 ),
                 Row(
                   children: [
-                    Text('Current Suppy'),
+                    const Text('Current Suppy'),
                     SizedBox(
                       width: width * 0.3,
                     ),
-                    Text('Minimum Suppy'),
+                    const Text('Minimum Suppy'),
                   ],
                 ),
                 SizedBox(
@@ -177,24 +145,9 @@ class _RefillReminderState extends State<RefillReminder> {
                   title: 'Next',
                   isButtonDisabled: false,
                   onPressed: () {
-                    // _service.setData(
-                    //     path: 'users/${auth.currentUser!.uid}/meds',
-                    //     data: medication.toMap());
                     //:Todo update min and current supply
-                    addmed(
-                        widget.medName,
-                        widget.selectedDrugType,
-                        widget.selectedUnit,
-                        widget.quantity,
-                        widget.medCon,
-                        widget.frequency,
-                        widget.time,
-                        widget.startDate,
-                        widget.endDate,
-                        'currentSupply',
-                        'minimumSupply');
                     database.setMed(medication);
-database.printMed();
+                    // database.printMed();
                     Navigator.push(
                       context,
                       MaterialPageRoute(

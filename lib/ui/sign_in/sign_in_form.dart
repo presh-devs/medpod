@@ -1,9 +1,7 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medpod/ui/sign_in/sign_in_page.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth.dart';
 import '../../utilities/common_widgets/show_exception-alertdailog.dart';
@@ -88,7 +86,7 @@ class _SignInFormState extends State<SignInForm> {
       //Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-            fullscreenDialog: true, builder: (context) => BottomNavBar()),
+            fullscreenDialog: true, builder: (context) => const BottomNavBar()),
       );
     } on FirebaseAuthException catch (e) {
     showExceptionAlertDialog(
