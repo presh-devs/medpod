@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: buildContent(),
-      floatingActionButton:  buildFAB(),
+      floatingActionButton: buildFAB(),
     );
   }
 
@@ -90,7 +90,10 @@ class _HomePageState extends State<HomePage> {
               query: _service.getMedQuery(),
               itemBuilder: (context, snapshot) {
                 medication = snapshot.data();
-                return buildMedTile(context, medication);
+                // Access the document ID
+                final documentReference =
+                    snapshot.reference; // Document reference
+                return buildMedTile(context, medication, documentReference);
                 // Data is now typed!
               },
               emptyBuilder: (context) {
@@ -120,24 +123,12 @@ class _HomePageState extends State<HomePage> {
           height: height * 0.015,
         ),
         Text(
-          'No meds due today ',
+          'No meds due today 😁',
           style: kMediumBody3TextStyle.copyWith(color: kBlackTextColor),
         ),
         SizedBox(
           height: height * 0.03,
         ),
-        // CustomButton(
-        //   title: 'Add med',
-        //   onPressed: () {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         fullscreenDialog: false,
-        //         builder: (context) => const AddMed(),
-        //       ),
-        //     );
-        //   },
-        //   isButtonDisabled: false,
-        // ),
       ],
     );
   }

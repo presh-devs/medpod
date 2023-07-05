@@ -6,7 +6,7 @@ import '../../utilities/common_widgets/headerRow.dart';
 import '../../utilities/constants/colors.dart';
 import 'feed.dart';
 import 'home.dart';
-import 'medication.dart';
+import 'medication_nav.dart';
 import 'more.dart';
 
 class BottomNavBar extends StatefulWidget {

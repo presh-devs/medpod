@@ -11,7 +11,7 @@ import '../utilities/common_widgets/dropdownButton.dart';
 import '../utilities/common_widgets/headerRow.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/button_style.dart';
-import 'bottom_navBar/medication.dart';
+import 'bottom_navBar/medication_nav.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddMed extends StatefulWidget {

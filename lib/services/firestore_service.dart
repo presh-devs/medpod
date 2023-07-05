@@ -11,7 +11,6 @@ class FirestoreService {
 
   static final instance = FirestoreService._();
 
-  // get medsCollection => _medsCollection;
 
   Auth auth = Auth();
   final User? user = Auth().currentUser;
@@ -27,10 +26,14 @@ class FirestoreService {
   }
 
   //delete data from firestore
-  Future<void> deleteData({required String path}) async {
-    final reference = FirebaseFirestore.instance.doc(path);
+  Future<void> deleteData({required DocumentReference<Medication> documentReference,} ) async {
+  //  final reference = FirebaseFirestore.instance.doc(path);
     //print('delete: $path');
-    await reference.delete();
+   // await reference.delete();
+    await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {
+      await myTransaction.delete(documentReference);
+    });
+
   }
 
   //medication query for FirestoreListview
@@ -47,16 +50,5 @@ class FirestoreService {
     return query;
   }
 
-  void printMeds({
-    required String path,
-  }) {
-    FirebaseFirestore.instance
-        .collection('meds')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      for (var doc in querySnapshot.docs) {
-        print(doc["name"]);
-      }
-    });
-  }
+
 }
