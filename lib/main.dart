@@ -7,7 +7,7 @@ import 'package:medpod/utilities/constants/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'models/med.dart';
@@ -22,9 +22,6 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onBoard');
 Firebase.initializeApp();
-  await Hive.initFlutter();
-  Hive.registerAdapter(MedAdapter());
-  await Hive.openBox<Med>('meds');
 
   runApp(const MyApp());
 }

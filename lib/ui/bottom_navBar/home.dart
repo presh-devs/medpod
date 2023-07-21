@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive/hive.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import '../../models/medication.dart';
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    Hive.box('meds').close();
+
     super.dispose();
   }
 
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          buildCalendarCard(height),
+          const calCard(),
           const SizedBox(
             height: 24,
           ),
