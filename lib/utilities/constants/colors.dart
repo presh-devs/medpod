@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor1 = Color(0xfff1c1e9);
+const kPrimaryColor1 = Color(0xff4597E8);
 const kPrimaryColor = Color(0xff2082e4);
 const kAlertSuccessColor = Color(0xff309F30);
 const kAlertWarningColor = Color(0xffFFB800);
@@ -14,3 +14,5 @@ const kHeadingTextColor = Color(0xff092841);
 const kBlackTextColor = Color(0xff333333);
 const kPrimaryTextColor = Color(0xff061A2E);
 //#2082E4
+//0x802082e4
+//4597E8
