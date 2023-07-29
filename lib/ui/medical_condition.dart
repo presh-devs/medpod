@@ -30,6 +30,8 @@ class MedicalCondition extends StatefulWidget {
 
 class _MedicalConditionState extends State<MedicalCondition> {
   MedCon _medCon = MedCon.other;
+
+  TextEditingController conditionField = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -62,14 +64,14 @@ class _MedicalConditionState extends State<MedicalCondition> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Text(
-                'What are you taking his med for?',
+              const Text(
+                'What are you taking this med for?',
               ),
               SizedBox(
                 height: height * 0.048,
               ),
               ListView.builder(
-                  physics: ScrollPhysics(parent: null),
+                  physics: const ScrollPhysics(parent: null),
                   shrinkWrap: true,
                   itemCount: medicalCondition.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -80,15 +82,16 @@ class _MedicalConditionState extends State<MedicalCondition> {
                           foregroundColor: kPrimaryTextColor,
                         ),
                         onPressed: () {
-                                                   Navigator.of(context).push(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  ScheduleReminder(medName: widget.medName,
-                                      selectedDrugType: widget.selectedDrugType,
-                                      selectedUnit: widget.selectedUnit,
-                                      quantity: widget.quantity,
-                                    medCon: medicalCondition[index],
-                                  ),
+                                  ScheduleReminder(
+                                medName: widget.medName,
+                                selectedDrugType: widget.selectedDrugType,
+                                selectedUnit: widget.selectedUnit,
+                                quantity: widget.quantity,
+                                medCon: medicalCondition[index],
+                              ),
                             ),
                           );
                         },
@@ -99,15 +102,32 @@ class _MedicalConditionState extends State<MedicalCondition> {
                       ),
                     );
                   }),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: conditionField,
+                onEditingComplete: ()  {
+                  String condition = conditionField.text;
+                  medicalCondition.add(conditionField.text);
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ScheduleReminder(
+                        medName: widget.medName,
+                        selectedDrugType: widget.selectedDrugType,
+                        selectedUnit: widget.selectedUnit,
+                        quantity: widget.quantity,
+                        medCon: condition,
+                      ),
+                    ),
+                  );
+                  //conditionField.clear();
+                },
+                decoration: const InputDecoration(
                   enabled: true,
-// hintText: '@gmail.com',
-                  labelText: 'Other(please specify)',
+                  labelText: 'Others(please specify)',
                 ),
               ),
               ListTile(
-                title: Text('other'),
+                title: const Text('other'),
                 leading: Radio(
                     value: MedCon.other,
                     groupValue: _medCon,
@@ -118,7 +138,7 @@ class _MedicalConditionState extends State<MedicalCondition> {
                     }),
               ),
               ListTile(
-                title: Text('Prefer not to say'),
+                title: const Text('Prefer not to say'),
                 leading: Radio(
                     value: MedCon.pnts,
                     groupValue: _medCon,

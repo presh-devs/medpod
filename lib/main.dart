@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medpod/services/auth.dart';
+import 'package:medpod/services/notification_service.dart';
 import 'package:medpod/ui/onboarding/onboarding_page.dart';
-import 'package:medpod/utilities/common_widgets/button.dart';
-import 'package:medpod/utilities/constants/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hive/hive.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'models/med.dart';
-
 
 int? isViewed;
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onBoard');
-Firebase.initializeApp();
-
+  Firebase.initializeApp();
+  await NotificationService().init();
+  await NotificationService().requestIOSPermissions();
   runApp(const MyApp());
 }
 
@@ -33,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<AuthBase>(
-    create: (context) => Auth(),
+      create: (context) => Auth(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Medpod',
@@ -48,4 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

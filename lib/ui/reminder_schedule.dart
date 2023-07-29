@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medpod/services/database.dart';
+import 'package:medpod/services/notification_service.dart';
 import 'package:medpod/ui/refill_reminder.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,8 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
   DateTime _endDateTime = DateTime.now();
   var startMonth = 'Jan';
   var endMonth = 'Jan';
+
+  NotificationService notificationService = NotificationService();
 
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now(),
@@ -76,6 +79,7 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     }
     return startMonth;
   }
+
   String? getEndMonth(String date) {
     for (var key in _months.keys) {
       if (date == key) {
@@ -86,6 +90,7 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     }
     return endMonth;
   }
+
   void pickDateRange() {
     showDateRangePicker(
       context: context,
@@ -101,7 +106,6 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
       });
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,11 +153,11 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
               ),
               Row(
                 children: [
-                  Text('Start Date'),
+                  const Text('Start Date'),
                   SizedBox(
                     width: width * 0.357,
                   ),
-                  Text('End Date'),
+                  const Text('End Date'),
                 ],
               ),
               SizedBox(
@@ -192,11 +196,11 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
               ),
               Row(
                 children: [
-                  Text('Time'),
+                  const Text('Time'),
                   SizedBox(
                     width: width * 0.425,
                   ),
-                  Text('Dosage'),
+                  const Text('Dosage'),
                 ],
               ),
               SizedBox(
@@ -226,7 +230,17 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
               CustomButton(
                 title: 'Next',
                 isButtonDisabled: false,
-                onPressed: () {
+                onPressed: () async {
+                   await notificationService.scheduleNotifications(
+                      id: 1,
+                      title: 'Med Reminder',
+                      body: 'Time to use your ${widget.medName}',
+                      time: DateTime(
+                          dateRange.start.year,
+                          dateRange.start.month,
+                          dateRange.start.day,
+                          _time.hour,
+                          _time.minute));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -239,6 +253,9 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
                         quantity: widget.quantity,
                         medCon: widget.medCon,
                         time: _time.format(context).toString(),
+                        //DateTime.fromMicrosecondsSinceEpoch(DateTime.parse(_time.format(context)).millisecondsSinceEpoch),
+                        //DateTime.fromTimeOfDay(_time).millisecondsSinceEpoch,
+                        // _time.format(context).toString(),
                         startDate: formattedStartDate,
                         endDate: formattedEndDate,
                         frequency: selectedFrequency,
@@ -317,7 +334,6 @@ class smallContainer extends StatelessWidget {
     );
   }
 }
-
 
 //if (newDateRange == null ) return;
 
