@@ -14,9 +14,10 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onBoard');
-  Firebase.initializeApp();
+
   await NotificationService().init();
   await NotificationService().requestIOSPermissions();
   runApp(const MyApp());

@@ -61,13 +61,15 @@ class NotificationService {
           title,
           body,
           tz.TZDateTime.from(time, tz.local),
+          //tz.TZDateTime.now(local).toDateTimeRange(DateTime(2023, 1, 31)),
           const NotificationDetails(
               android: AndroidNotificationDetails(
                   'your channel id', 'your channel name',
                   channelDescription: 'your channel description')),
           androidAllowWhileIdle: true,
           uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
+              UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time);
     } catch (e) {
       print(e);
     }

@@ -4,7 +4,8 @@ import 'package:medpod/services/database.dart';
 import 'package:medpod/services/notification_service.dart';
 import 'package:medpod/ui/refill_reminder.dart';
 import 'package:provider/provider.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import '../utilities/common_widgets/alingedText.dart';
 import '../utilities/common_widgets/button.dart';
 import '../utilities/common_widgets/dropdownButton.dart';
@@ -113,6 +114,12 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     final width = MediaQuery.of(context).size.width;
     final start = dateRange.start;
     final end = dateRange.end;
+
+    final tZone = tz.local;
+
+    tz.TZDateTime tzDateTimeStart = tz.TZDateTime.from(dateRange.start, tZone);
+    tz.TZDateTime tzDateTimeEnd = tz.TZDateTime.from(dateRange.end, tZone);
+
     final difference = dateRange.duration;
     String formattedStartDate = '$startMonth,${start.day}';
     String formattedEndDate = '$endMonth,${end.day}';
@@ -231,16 +238,12 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
                 title: 'Next',
                 isButtonDisabled: false,
                 onPressed: () async {
-                   await notificationService.scheduleNotifications(
+                  await notificationService.scheduleNotifications(
                       id: 1,
                       title: 'Med Reminder',
-                      body: 'Time to use your ${widget.medName}',
-                      time: DateTime(
-                          dateRange.start.year,
-                          dateRange.start.month,
-                          dateRange.start.day,
-                          _time.hour,
-                          _time.minute));
+                      body: 'Time to use your ${widget.medName} ${widget.selectedDrugType}',
+                      time: DateTime(start.year, start.month, start.day,
+                          _time.hour, _time.minute));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
