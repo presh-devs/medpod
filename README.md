@@ -1,6 +1,6 @@
 # medpod
 
-A new Flutter project.
+Medpod is a mobile application that reminds people of when to take and refill their prescribed medication so as to stay healthy and avoid the health issues that comes with skipping medication .
 
 ## Getting Started
 
