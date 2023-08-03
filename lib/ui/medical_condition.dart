@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medpod/ui/refill_reminder.dart';
 import 'package:medpod/ui/reminder_schedule.dart';
+import 'package:medpod/utilities/constants/button_style.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../utilities/common_widgets/button.dart';
@@ -9,7 +10,7 @@ import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/colors.dart';
 import '../utilities/constants/text_styles.dart';
 
-enum MedCon { other, pnts }
+enum MedCon { supplements, pnts }
 
 class MedicalCondition extends StatefulWidget {
   final String medName;
@@ -29,7 +30,7 @@ class MedicalCondition extends StatefulWidget {
 }
 
 class _MedicalConditionState extends State<MedicalCondition> {
-  MedCon _medCon = MedCon.other;
+  MedCon? _medCon;
 
   TextEditingController conditionField = TextEditingController();
   @override
@@ -60,15 +61,14 @@ class _MedicalConditionState extends State<MedicalCondition> {
               buildHeaderRow1(
                   title: 'Medical Condition',
                   imageUrl: 'assets/icons/stethoscope.png'),
-//: TODO add icon url
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.017,
               ),
               const Text(
                 'What are you taking this med for?',
               ),
               SizedBox(
-                height: height * 0.048,
+                height: height * 0.04,
               ),
               ListView.builder(
                   physics: const ScrollPhysics(parent: null),
@@ -78,9 +78,7 @@ class _MedicalConditionState extends State<MedicalCondition> {
                     return Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: kPrimaryTextColor,
-                        ),
+                        style: kTextButtonStyle,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -104,7 +102,7 @@ class _MedicalConditionState extends State<MedicalCondition> {
                   }),
               TextField(
                 controller: conditionField,
-                onEditingComplete: ()  {
+                onEditingComplete: () {
                   String condition = conditionField.text;
                   medicalCondition.add(conditionField.text);
 
@@ -127,18 +125,61 @@ class _MedicalConditionState extends State<MedicalCondition> {
                 ),
               ),
               ListTile(
-                title: const Text('other'),
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    style: kTextButtonStyle,
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => ScheduleReminder(
+                          medName: widget.medName,
+                          selectedDrugType: widget.selectedDrugType,
+                          selectedUnit: widget.selectedUnit,
+                          quantity: widget.quantity,
+                          medCon: 'Supplements',
+                        ),
+                      ),
+                    ),
+                    child: const Text('Supplements'),
+                  ),
+                ),
                 leading: Radio(
-                    value: MedCon.other,
+                    value: MedCon.supplements,
                     groupValue: _medCon,
                     onChanged: (MedCon? value) {
                       setState(() {
                         _medCon = value!;
                       });
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ScheduleReminder(
+                            medName: widget.medName,
+                            selectedDrugType: widget.selectedDrugType,
+                            selectedUnit: widget.selectedUnit,
+                            quantity: widget.quantity,
+                            medCon: 'Supplements',
+                          ),
+                        ),
+                      );
                     }),
               ),
               ListTile(
-                title: const Text('Prefer not to say'),
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(style: kTextButtonStyle,
+                      onPressed: () =>Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ScheduleReminder(
+                        medName: widget.medName,
+                        selectedDrugType: widget.selectedDrugType,
+                        selectedUnit: widget.selectedUnit,
+                        quantity: widget.quantity,
+                        medCon: 'Supplements',
+                      ),
+                    ),
+                  ),
+                  child: const Text('Prefer not to say')),
+                ),
                 leading: Radio(
                     value: MedCon.pnts,
                     groupValue: _medCon,
@@ -146,6 +187,17 @@ class _MedicalConditionState extends State<MedicalCondition> {
                       setState(() {
                         _medCon = value!;
                       });
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ScheduleReminder(
+                            medName: widget.medName,
+                            selectedDrugType: widget.selectedDrugType,
+                            selectedUnit: widget.selectedUnit,
+                            quantity: widget.quantity,
+                            medCon: 'Prefer not to say',
+                          ),
+                        ),
+                      );
                     }),
               ),
             ],

@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              '10:00pm',
+              'Meds',
               style: kBodyLTextStyle3,
             ),
           ),

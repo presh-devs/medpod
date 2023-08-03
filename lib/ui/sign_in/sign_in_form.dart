@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/auth.dart';
 import '../../utilities/common_widgets/show_exception-alertdailog.dart';
 import '../../utilities/constants/button_style.dart';
@@ -52,6 +53,18 @@ class _SignInFormState extends State<SignInForm> {
   final FocusNode _passwordFocusNode = FocusNode();
   SignInModel get model => widget.model;
 
+  SharedPreferences? prefs;
+  prefsInit() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  @override
+  void initState() {
+    prefsInit();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   void dispose() {
     _nameFocusNode.dispose();
@@ -60,13 +73,14 @@ class _SignInFormState extends State<SignInForm> {
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
+    prefs?.setBool('onBoarded', true);
     super.dispose();
   }
 
-
-
   Future<void> _submit() async {
     //model.name = _nameController.text;
+    prefs?.setBool('onBoarded', true);
+    print("${prefs?.getBool('onBoarded ')} in form");
     SnackBar snackBar = SnackBar(
       backgroundColor: kPrimaryColor,
       content: Row(
@@ -75,7 +89,6 @@ class _SignInFormState extends State<SignInForm> {
           CircularProgressIndicator(),
           SizedBox(width: 20),
           Text('Loading...'),
-
         ],
       ),
     );
@@ -89,7 +102,7 @@ class _SignInFormState extends State<SignInForm> {
             fullscreenDialog: true, builder: (context) => const BottomNavBar()),
       );
     } on FirebaseAuthException catch (e) {
-    showExceptionAlertDialog(
+      showExceptionAlertDialog(
         context,
         exception: e,
         title: 'Sign in failed',
@@ -101,13 +114,12 @@ class _SignInFormState extends State<SignInForm> {
 // and use it to show a SnackBar.
 
   void _toggleFormType() {
-
-        setState(() {
-          model.toggleFormType();
-          _emailController.clear;
-          _nameController.clear;
-          _passwordController.clear;
-        });
+    setState(() {
+      model.toggleFormType();
+      _emailController.clear;
+      _nameController.clear;
+      _passwordController.clear;
+    });
   }
 
   void _togglePasswordIcon() {

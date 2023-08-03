@@ -5,6 +5,7 @@ import 'package:medpod/ui/bottom_navBar/bottomNavBar.dart';
 import 'package:medpod/ui/reminder_schedule.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
+import '../services/notification_service.dart';
 import '../utilities/common_widgets/button.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/common_widgets/headerRow.dart';
@@ -18,9 +19,9 @@ class RefillReminder extends StatefulWidget {
     required this.quantity,
     required this.medCon,
     required this.time,
-    required this.startDate,
-    required this.endDate,
-    required this.frequency,
+    // required this.startDate,
+    // required this.endDate,
+    required this.frequency, required this.fStartDate, required this.fEndDate, required this.dateTimeRange,
     //required this.database,
   }) : super(key: key);
   //final Database database;
@@ -29,9 +30,12 @@ class RefillReminder extends StatefulWidget {
   final String selectedUnit;
   final String quantity;
   final String medCon;
-  final String time;
-  final String startDate;
-  final String endDate;
+  final TimeOfDay time;
+  final String fStartDate;
+  final String fEndDate;
+  // final DateTimeRange startDate;
+  // final DateTimeRange endDate;
+  final DateTimeRange dateTimeRange;
   final String frequency;
 
   @override
@@ -40,6 +44,7 @@ class RefillReminder extends StatefulWidget {
 
 class _RefillReminderState extends State<RefillReminder> {
   // final _service = FirestoreService.instance;
+  NotificationService notificationService = NotificationService();
 
   String? remindMe;
   @override
@@ -57,9 +62,9 @@ class _RefillReminderState extends State<RefillReminder> {
       ..quantity = widget.quantity
       ..medicalCondition = widget.medCon
       ..frequency = widget.frequency
-      ..time = widget.time
-      ..endDate = widget.endDate
-      ..startDate = widget.startDate
+      ..time = widget.time.format(context).toString()
+      ..endDate = widget.fEndDate
+      ..startDate = widget.fStartDate
       ..currentSupply = 'widget.'
       ..minimumSupply = 'widget.minimumSupply';
 
@@ -144,10 +149,16 @@ class _RefillReminderState extends State<RefillReminder> {
                 CustomButton(
                   title: 'Next',
                   isButtonDisabled: false,
-                  onPressed: () {
+                  onPressed: () async {
                     //:Todo update min and current supply
                     database.setMed(medication);
                     // database.printMed();
+                    await notificationService.scheduleNotifications(
+                        id: 1,
+                        title: 'Med Reminder',
+                        body: 'Time to use your ${widget.medName} ${widget.selectedDrugType}',
+                        time: DateTime(widget.dateTimeRange.start.year, widget.dateTimeRange.start.month, widget.dateTimeRange.start.day,
+                            widget.time.hour, widget.time.minute));
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medpod/ui/medical_condition.dart';
-import 'package:medpod/ui/refill_reminder.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
-import 'package:medpod/utilities/constants/colors.dart';
-import 'package:medpod/utilities/constants/text_styles.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import '../utilities/common_widgets/alingedText.dart';
 import '../utilities/common_widgets/dropdownButton.dart';
 import '../utilities/common_widgets/headerRow.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/button_style.dart';
-import 'bottom_navBar/medication_nav.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddMed extends StatefulWidget {

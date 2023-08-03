@@ -33,13 +33,11 @@ class ScheduleReminder extends StatefulWidget {
 }
 
 class _ScheduleReminderState extends State<ScheduleReminder> {
-  TimeOfDay _time = const TimeOfDay(hour: 4, minute: 00);
-  DateTime _startDateTime = DateTime.now();
-  DateTime _endDateTime = DateTime.now();
-  var startMonth = 'Jan';
-  var endMonth = 'Jan';
+  TimeOfDay _time = TimeOfDay.now();
+  String? startDate;
+  String? endDate ;
 
-  NotificationService notificationService = NotificationService();
+
 
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now(),
@@ -51,11 +49,12 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
         .then((value) {
       setState(() {
         _time = value!;
+
       });
     });
   }
 
-  var _months = {
+  final _months = {
     '1': 'Jan',
     '2': 'Feb',
     '3': 'Mar',
@@ -74,22 +73,20 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
     for (var key in _months.keys) {
       if (date == key) {
         var month = _months[date];
-        startMonth = month!;
-        print(startMonth);
+        startDate = month!;
       }
     }
-    return startMonth;
+    return startDate;
   }
 
   String? getEndMonth(String date) {
     for (var key in _months.keys) {
       if (date == key) {
         var month = _months[date];
-        endMonth = month!;
-        print(endMonth);
+        endDate = month!;
       }
     }
-    return endMonth;
+    return endDate;
   }
 
   void pickDateRange() {
@@ -102,27 +99,19 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
       if (value == null) return;
       setState(() {
         dateRange = value;
-        startMonth = getStartMonth(dateRange.start.month.toString())!;
-        endMonth = getEndMonth(dateRange.end.month.toString())!;
       });
     });
   }
+
+  //getEndMonth(dateRange.end.month.toString())!;
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final start = dateRange.start;
-    final end = dateRange.end;
-
-    final tZone = tz.local;
-
-    tz.TZDateTime tzDateTimeStart = tz.TZDateTime.from(dateRange.start, tZone);
-    tz.TZDateTime tzDateTimeEnd = tz.TZDateTime.from(dateRange.end, tZone);
-
-    final difference = dateRange.duration;
-    String formattedStartDate = '$startMonth,${start.day}';
-    String formattedEndDate = '$endMonth,${end.day}';
+    //final difference = dateRange.duration;
+    String formattedStartDate = '${getEndMonth(dateRange.start.month.toString())!},${dateRange.start.day}';
+    String formattedEndDate = '${getEndMonth(dateRange.end.month.toString())!},${dateRange.end.day}';
 
     return Scaffold(
       appBar: AppBar(
@@ -226,7 +215,7 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
                   SizedBox(width: width * 0.07),
                   smallContainer(
                     iconUrl: 'assets/icons/bluePill.svg',
-                    text: '2 pills',
+                    text: '2 ${widget.selectedDrugType}',
                     onTap: () {},
                   ),
                 ],
@@ -237,30 +226,21 @@ class _ScheduleReminderState extends State<ScheduleReminder> {
               CustomButton(
                 title: 'Next',
                 isButtonDisabled: false,
-                onPressed: () async {
-                  await notificationService.scheduleNotifications(
-                      id: 1,
-                      title: 'Med Reminder',
-                      body: 'Time to use your ${widget.medName} ${widget.selectedDrugType}',
-                      time: DateTime(start.year, start.month, start.day,
-                          _time.hour, _time.minute));
+                onPressed: ()  {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       fullscreenDialog: false,
                       builder: (context) => RefillReminder(
-                        // database: Database(),
                         medName: widget.medName,
                         selectedDrugType: widget.selectedDrugType,
                         selectedUnit: widget.selectedUnit,
                         quantity: widget.quantity,
                         medCon: widget.medCon,
-                        time: _time.format(context).toString(),
-                        //DateTime.fromMicrosecondsSinceEpoch(DateTime.parse(_time.format(context)).millisecondsSinceEpoch),
-                        //DateTime.fromTimeOfDay(_time).millisecondsSinceEpoch,
-                        // _time.format(context).toString(),
-                        startDate: formattedStartDate,
-                        endDate: formattedEndDate,
+                        time: _time,
+                        dateTimeRange:dateRange,
+                        fEndDate: formattedEndDate,
+                        fStartDate: formattedStartDate,
                         frequency: selectedFrequency,
                       ),
                     ),

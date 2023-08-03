@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/auth.dart';
 import '../../utilities/constants/text_styles.dart';
 import 'validators.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 enum EmailFormType { signIn, signUp }
 
 class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
+
   final AuthBase auth;
   SignInModel({
     required this.auth,
@@ -32,11 +34,17 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
     updateWith(isLoading: true, submitted: true);
     try {
       if (formType == EmailFormType.signIn) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('onBoarded', true);
+        print(prefs.getBool('onBoarded'));
         await auth.signInWithEmailAndPassword(
           email,
           password,
         );
       } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('onBoarded', true);
+        print(prefs.getBool('onBoarded'));
         await auth.createUserWithEmailAndPassword(
           name,
           email,
