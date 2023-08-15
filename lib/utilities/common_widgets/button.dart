@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
             elevation: 2,
             backgroundColor: kDefaultButtonColor,
             disabledForegroundColor: kDefaultButtonColor.withOpacity(0.38),
-            disabledBackgroundColor: Color(0xffC7C6CA),
+            disabledBackgroundColor: const Color(0xffC7C6CA),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),

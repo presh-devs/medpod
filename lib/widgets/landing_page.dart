@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medpod/ui/sign_in/sign_in_model.dart';
+import 'package:medpod/views/sign_in/sign_in_model.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
-import '../ui/bottom_navBar/bottomNavBar.dart';
-import '../ui/bottom_navBar/home.dart';
-import '../ui/sign_in/sign_in_page.dart';
+import '../views/bottom_navBar/bottom_navbar.dart';
+import '../views/sign_in/sign_in_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -20,7 +19,7 @@ class LandingPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.active) {
             final user = snapshot.data;
             if (user?.uid != null) {
-              return const BottomNavBar();
+              return  BottomNavBar();
             } else {
               return const SignInPage(
                 isLoading: false,

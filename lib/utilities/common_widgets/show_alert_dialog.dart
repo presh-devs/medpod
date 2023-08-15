@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future? showAlertDialog(
+ showAlertDialog(
     BuildContext context, {
       required String title,
       required String? content,

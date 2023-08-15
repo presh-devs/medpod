@@ -1,20 +1,19 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:medpod/utilities/constants/colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../ui/sign_in/sign_in_form.dart';
+import '../views/sign_in/sign_in_form.dart';
 
-class calCard extends StatefulWidget {
-  const calCard({Key? key}) : super(key: key);
+class CalCard extends StatefulWidget {
+  const CalCard({Key? key}) : super(key: key);
 
   @override
-  State<calCard> createState() => _calCardState();
+  State<CalCard> createState() => _CalCardState();
 }
 
-class _calCardState extends State<calCard> {
+class _CalCardState extends State<CalCard> {
   var height = logicalScreenSize.height;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -85,7 +84,7 @@ class _calCardState extends State<calCard> {
                             borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           date.day.toString(),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )),
                     todayBuilder: (context, date, events) => Container(
                         margin: const EdgeInsets.all(4.0),
@@ -95,7 +94,7 @@ class _calCardState extends State<calCard> {
                             borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           date.day.toString(),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )),
                   ),
                 ),
