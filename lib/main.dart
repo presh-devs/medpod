@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medpod/services/auth.dart';
 import 'package:medpod/services/notification_service.dart';
-import 'package:medpod/ui/onboarding/onboarding_page.dart';
+import 'package:medpod/views/onboarding/onboarding_page.dart';
 import 'package:flutter/services.dart';
 import 'package:medpod/widgets/landing_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
