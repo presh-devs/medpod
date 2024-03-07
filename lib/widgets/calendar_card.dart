@@ -7,7 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../views/sign_in/sign_in_form.dart';
 
 class CalCard extends StatefulWidget {
-  const CalCard({Key? key}) : super(key: key);
+  const CalCard({super.key});
 
   @override
   State<CalCard> createState() => _CalCardState();

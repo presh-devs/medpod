@@ -34,7 +34,7 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
       if (formType == EmailFormType.signIn) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('onBoarded', true);
-        print(prefs.getBool('onBoarded'));
+        debugPrint(prefs.getBool('onBoarded').toString());
         await auth.signInWithEmailAndPassword(
           email,
           password,
@@ -42,7 +42,7 @@ class SignInModel with EmailAndPasswordValidator, ChangeNotifier {
       } else {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('onBoarded', true);
-        print(prefs.getBool('onBoarded'));
+        debugPrint(prefs.getBool('onBoarded').toString());
         await auth.createUserWithEmailAndPassword(
           name,
           email,

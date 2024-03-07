@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medpod/views/refill_reminder.dart';
-import '../utilities/common_widgets/alingedText.dart';
+import '../utilities/common_widgets/alinged_text.dart';
 import '../utilities/common_widgets/button.dart';
 import '../utilities/common_widgets/dropdown_button.dart';
 import '../utilities/common_widgets/header_row.dart';
@@ -14,13 +14,12 @@ class ScheduleReminder extends StatefulWidget {
   final String quantity;
   final String medCon;
   const ScheduleReminder(
-      {Key? key,
+      {super.key,
       required this.medName,
       required this.selectedDrugType,
       required this.selectedUnit,
       required this.quantity,
-      required this.medCon})
-      : super(key: key);
+      required this.medCon});
 
   @override
   State<ScheduleReminder> createState() => _ScheduleReminderState();
@@ -278,11 +277,11 @@ class SmallContainer extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   const SmallContainer({
-    Key? key,
+    super.key,
     required this.iconUrl,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

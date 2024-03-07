@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:hive/hive.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
-import 'package:medpod/utilities/common_widgets/button.dart';
+// import 'package:medpod/utilities/common_widgets/button.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import '../../models/medication.dart';
 import '../../services/auth.dart';
@@ -16,7 +16,7 @@ import '../sign_in/sign_in_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildContent() {
-    print('Inside Build content');
+    
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 // Data is now typed!
               },
               emptyBuilder: (context) {
-                print("empty state");
+                debugPrint("empty state");
                 return buildEmptyState(width, height, context);
               },
             ),

@@ -6,10 +6,10 @@ import 'sign_in_form.dart';
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 class SignInPage extends StatefulWidget {
   const SignInPage({
-    Key? key,
+    super.key,
     // required this.manager,
     required this.isLoading,  required this.formType,
-  }) : super(key: key);
+  });
   // final SignInManager manager;
   final bool  isLoading;
   final EmailFormType formType;

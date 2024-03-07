@@ -5,11 +5,10 @@ import '../constants/text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.onPressed,
-      this.isButtonDisabled = true})
-      : super(key: key);
+      this.isButtonDisabled = true});
   final String title;
   final VoidCallback? onPressed;
   final bool isButtonDisabled;

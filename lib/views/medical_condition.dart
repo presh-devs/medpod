@@ -12,12 +12,11 @@ class MedicalCondition extends StatefulWidget {
   final String selectedUnit;
   final String quantity;
   const MedicalCondition(
-      {Key? key,
+      {super.key,
       required this.medName,
       required this.selectedDrugType,
       required this.selectedUnit,
-      required this.quantity})
-      : super(key: key);
+      required this.quantity});
 
   @override
   State<MedicalCondition> createState() => _MedicalConditionState();

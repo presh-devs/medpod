@@ -5,11 +5,11 @@ import '../constants/colors.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
   const CustomProgressIndicator({
-    Key? key,
+    super.key,
     required this.width,
     required this.progress,
     required this.percent,
-  }) : super(key: key);
+  });
 
   final double width;
   final String progress;

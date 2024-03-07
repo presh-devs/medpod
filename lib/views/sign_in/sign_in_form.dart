@@ -20,9 +20,9 @@ var width = logicalScreenSize.width;
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
-    Key? key,
+    super.key,
     required this.model,
-  }) : super(key: key);
+  });
   final SignInModel model;
 
   static Widget create(BuildContext context, var sformType) {
@@ -80,7 +80,7 @@ class _SignInFormState extends State<SignInForm> {
   Future<void> _submit() async {
     //model.name = _nameController.text;
     prefs?.setBool('onBoarded', true);
-    print("${prefs?.getBool('onBoarded ')} in form");
+    debugPrint("${prefs?.getBool('onBoarded ')} in form");
     SnackBar snackBar = const SnackBar(
       backgroundColor: kPrimaryColor,
       content: Row(

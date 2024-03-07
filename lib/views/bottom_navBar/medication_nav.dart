@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MedicationPage extends StatelessWidget {
-  const MedicationPage({Key? key}) : super(key: key);
+  const MedicationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    // final height = MediaQuery.of(context).size.height;
-    // final width = MediaQuery.of(context).size.width;
-    final List<String> mediactions = [];
+    // // final height = MediaQuery.of(context).size.height;
+    // // final width = MediaQuery.of(context).size.width;
+    // final List<String> mediactions = [];
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),

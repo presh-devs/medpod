@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medpod/utilities/constants/text_styles.dart';
 import '../../services/auth.dart';
 import 'package:provider/provider.dart';
 import '../../utilities/common_widgets/header_row.dart';
@@ -12,7 +13,7 @@ import 'medication_nav.dart';
 import 'more.dart';
 
 class BottomNavBar extends StatelessWidget {
-  BottomNavBar({Key? key}) : super(key: key);
+  BottomNavBar({super.key});
 
   String greeting() {
     var hour = DateTime.now().hour;
@@ -23,6 +24,18 @@ class BottomNavBar extends StatelessWidget {
       return 'Good Afternoon';
     }
     return 'Good Evening';
+  }
+  String greetingIcon(String greeting){
+switch (greeting) {
+  case "Good Morning":
+    return '☀️';
+    case "Good Afternoon":
+    return '☀️';
+      case "Good Night":
+    return '🌙';
+  default:
+  return '☀️';
+}
   }
 
   final screens = [
@@ -53,20 +66,28 @@ class BottomNavBar extends StatelessWidget {
                   ),
                 ),
               ),
-              title: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: buildHeaderRow(
-                        title: greeting(),
-                        imageUrl: 'assets/images/sun.png',
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('  ${auth.currentUser!.displayName!}')),
-                  ]),
+              title: ListTile( contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                title: buildHeaderRow(
+                    title: greeting(), imageUrl:greetingIcon(greeting())),
+                subtitle: Text(auth.currentUser!.displayName!,style: kMediumBody3TextStyle.copyWith(color: Colors.black)),
+              ),
+              //  Column(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: buildHeaderRow(
+              //           title: greeting(),
+              //           imageUrl: 'assets/images/sun.png',
+              //         ),
+              //       ),
+              //       Align(
+              //           alignment: Alignment.centerLeft,
+              //           child: FittedBox(
+              //             fit: BoxFit.contain,
+              //             child: Text('  ${auth.currentUser!.displayName!}'))),
+              //     ]),
               elevation: 0,
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,

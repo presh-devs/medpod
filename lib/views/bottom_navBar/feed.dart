@@ -4,7 +4,7 @@ import '../../utilities/constants/colors.dart';
 import '../../utilities/constants/text_styles.dart';
 
 class FeedPage extends StatelessWidget {
-  const FeedPage({Key? key}) : super(key: key);
+  const FeedPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,15 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medpod/views/medical_condition.dart';
 import 'package:medpod/utilities/common_widgets/button.dart';
-import '../utilities/common_widgets/alingedText.dart';
+import '../utilities/common_widgets/alinged_text.dart';
 import '../utilities/common_widgets/dropdown_button.dart';
 import '../utilities/common_widgets/header_row.dart';
 import '../utilities/common_widgets/progress_indicator.dart';
 import '../utilities/constants/button_style.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+enum MedUnits {
+  grams('g', "grams"),
+  internationalUnit('IU', "internationalUnit"),
+  milligrams('mg', "milligrams"),
+  milliliter('ml', "milliliter"),
+  millieequivalent('mEq', "millieequivalent"),
+  percentage('%', "percentage"),
+  unit('Unit', "unit");
+
+  const MedUnits(this.label, this.meaning);
+  final String label;
+  final String meaning;
+}
+
 class AddMed extends StatefulWidget {
-  const AddMed({Key? key}) : super(key: key);
+  const AddMed({super.key});
 
   @override
   State<AddMed> createState() => _AddMedState();
@@ -129,10 +143,17 @@ class _AddMedState extends State<AddMed> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: buildUnitsDropdown(),
-                    ),
+                    DropdownMenu<MedUnits>(
+                      inputDecorationTheme: InputDecorationTheme(border: InputBorder.none,  isDense: true),
+                        initialSelection: MedUnits.grams,
+                        onSelected: (MedUnits? unit) {
+                          selectedUnit = unit!.label;
+                        },
+                        dropdownMenuEntries: MedUnits.values
+                            .map<DropdownMenuEntry<MedUnits>>(
+                                (MedUnits unit) => DropdownMenuEntry(
+                                    value: unit, label: unit.label))
+                            .toList()),
                   ],
                 ),
               ),
@@ -179,40 +200,59 @@ class _AddMedState extends State<AddMed> {
   }
 
   Widget buildUnitsDropdown() {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-        icon: SvgPicture.asset(
-          'assets/icons/arrowd.svg',
-        ),
-        hint: Text(
-          'mg',
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).hintColor,
-          ),
-        ),
-        items: units
-            .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ))
-            .toList(),
-        value: selectedUnit,
-        onChanged: (value) {
-          setState(() {
-            selectedUnit = value as String;
-          });
-        },
-        buttonHeight: 40,
-        buttonWidth: 60,
-        itemHeight: 40,
-      ),
+    return SizedBox(
+      width: 40,
+      child: CustomDropdownButton(
+          dropdownValue: selectedUnit,
+          items: units,
+          onChanged: (value) {
+            setState(() {
+              selectedUnit = value as String;
+            });
+          },
+          isExpanded: false,
+          title: '',
+          hintText: ''),
     );
+
+    // DropdownButtonHideUnderline(
+    //   child: DropdownButton2(
+    //     customButton: SvgPicture.asset(
+    //       'assets/icons/arrowd.svg',
+    //     ),
+    //     hint: Text(
+    //       'mg',
+    //       style: TextStyle(
+    //         fontSize: 14,
+    //         color: Theme.of(context).hintColor,
+    //       ),
+    //     ),
+    //     items: units
+    //         .map((item) => DropdownMenuItem<String>(
+    //               value: item,
+    //               child: Text(
+    //                 item,
+    //                 style: const TextStyle(
+    //                   fontSize: 14,
+    //                 ),
+    //               ),
+    //             ))
+    //         .toList(),
+    //     value: selectedUnit,
+    //     onChanged: (value) {
+    //       setState(() {
+    //         selectedUnit = value as String;
+    //       });
+    //     },
+    //     buttonStyleData: const ButtonStyleData(
+    //       height: 40,
+    //     width: 60,
+    //     ),
+    //     menuItemStyleData: const MenuItemStyleData(
+    //       height: 60,
+    //     ),
+    //   ),
+    // );
   }
 }
 

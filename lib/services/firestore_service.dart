@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:medpod/models/medication.dart';
 
 import 'auth.dart';
@@ -19,7 +20,7 @@ class FirestoreService {
     required Map<String, dynamic> data,
   }) async {
     CollectionReference reference = FirebaseFirestore.instance.collection(path);
-    print('$path: $data');
+    debugPrint('$path: $data');
     await reference.add(data);
   }
 

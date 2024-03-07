@@ -12,7 +12,7 @@ import 'dart:async';
 import '../sign_in/sign_in_page.dart';
 
 class Onboard extends StatefulWidget {
-  const Onboard({Key? key}) : super(key: key);
+  const Onboard({super.key});
 
   @override
   State<Onboard> createState() => _OnboardState();

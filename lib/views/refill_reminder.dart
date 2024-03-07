@@ -12,7 +12,7 @@ import '../utilities/common_widgets/header_row.dart';
 
 class RefillReminder extends StatefulWidget {
   const RefillReminder({
-    Key? key,
+    super.key,
     required this.medName,
     required this.selectedDrugType,
     required this.selectedUnit,
@@ -23,7 +23,7 @@ class RefillReminder extends StatefulWidget {
     // required this.endDate,
     required this.frequency, required this.fStartDate, required this.fEndDate, required this.dateTimeRange,
     //required this.database,
-  }) : super(key: key);
+  });
   //final Database database;
   final String medName;
   final String selectedDrugType;
